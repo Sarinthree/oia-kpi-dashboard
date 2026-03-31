@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OIA Dashboard | à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸ à¸à¸à¸£. 2570 | à¸¡à¸¡à¸ª.</title>
+<title>OIA Dashboard | ตัวชี้วัด กพร. 2570 | มมส.</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -21,7 +21,7 @@
 }
 body{font-family:'Segoe UI',Tahoma,'TH Sarabun New',sans-serif;background:var(--bg);color:#202124;font-size:14px;min-height:100vh}
 
-/* ââââââââââââââââââââââ HEADER ââââââââââââââââââââââ */
+/* ══════════════════════ HEADER ══════════════════════ */
 .site-header{background:var(--maroon);padding:0 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;height:56px}
 .header-left{display:flex;align-items:center;gap:12px}
 .header-logo{width:36px;height:36px;background:var(--gold-light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px}
@@ -32,7 +32,7 @@ body{font-family:'Segoe UI',Tahoma,'TH Sarabun New',sans-serif;background:var(--
 .btn-export-all:hover{background:var(--gold-mid)}
 .gold-bar{height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-mid),var(--gold))}
 
-/* ââââââââââââââââââââââ NAV TABS ââââââââââââââââââââââ */
+/* ══════════════════════ NAV TABS ══════════════════════ */
 .nav-bar{background:var(--white);border-bottom:1px solid var(--grey-border);display:flex;overflow-x:auto;position:sticky;top:56px;z-index:199;-webkit-overflow-scrolling:touch}
 .nav-bar::-webkit-scrollbar{height:3px}
 .nav-bar::-webkit-scrollbar-thumb{background:var(--maroon);border-radius:2px}
@@ -43,11 +43,11 @@ body{font-family:'Segoe UI',Tahoma,'TH Sarabun New',sans-serif;background:var(--
 .nav-badge.green{background:var(--green)}
 .nav-badge.orange{background:var(--orange)}
 
-/* ââââââââââââââââââââââ PAGE LAYOUT ââââââââââââââââââââââ */
+/* ══════════════════════ PAGE LAYOUT ══════════════════════ */
 .page{display:none;padding:20px 24px;max-width:1280px;margin:0 auto}
 .page.active{display:block}
 
-/* ââââââââââââââââââââââ DASHBOARD ââââââââââââââââââââââ */
+/* ══════════════════════ DASHBOARD ══════════════════════ */
 /* Summary Cards Row */
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px}
 .kpi-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;border-left:5px solid var(--maroon);transition:.2s;cursor:pointer;position:relative;overflow:hidden}
@@ -101,7 +101,7 @@ tr:hover td{background:#FAF8F8}
 .empty-state .empty-icon{font-size:40px;margin-bottom:10px;opacity:.5}
 .empty-state p{font-size:13px}
 
-/* ââââââââââââââââââââââ FORM PAGES ââââââââââââââââââââââ */
+/* ══════════════════════ FORM PAGES ══════════════════════ */
 .form-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
 @media(max-width:900px){.form-layout{grid-template-columns:1fr}}
 .g-container{max-width:100%}
@@ -182,34 +182,34 @@ tr:hover td{background:#FAF8F8}
 <!-- HEADER -->
 <div class="site-header">
   <div class="header-left">
-    <div class="header-logo">ðï¸</div>
+    <div class="header-logo">🏛️</div>
     <div class="header-title">
-      <h1>OIA Dashboard | à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸ à¸à¸à¸£. 2570</h1>
-      <p>à¸à¸¥à¸¸à¹à¸¡à¸à¸²à¸à¸à¸´à¸à¸à¸²à¸£à¸à¹à¸²à¸à¸à¸£à¸°à¹à¸à¸¨ (OIA) Â· à¸¡à¸«à¸²à¸§à¸´à¸à¸¢à¸²à¸¥à¸±à¸¢à¸¡à¸«à¸²à¸ªà¸²à¸£à¸à¸²à¸¡</p>
+      <h1>OIA Dashboard | ตัวชี้วัด กพร. 2570</h1>
+      <p>กลุ่มงานกิจการต่างประเทศ (OIA) · มหาวิทยาลัยมหาสารคาม</p>
     </div>
   </div>
   <div class="header-right">
-    <button class="btn-export-all" onclick="exportAllCSV()">â¬ï¸ Export à¸à¸±à¹à¸à¸«à¸¡à¸</button>
+    <button class="btn-export-all" onclick="exportAllCSV()">⬇️ Export ทั้งหมด</button>
   </div>
 </div>
 <div class="gold-bar"></div>
 
 <!-- NAV TABS -->
 <div class="nav-bar">
-  <div class="nav-tab active" onclick="showPage('dashboard')">ð à¸ à¸²à¸à¸£à¸§à¸¡ Dashboard</div>
-  <div class="nav-tab" onclick="showPage('f116')">ð 1.1.6 <span id="badge-116" class="nav-badge">0</span></div>
-  <div class="nav-tab" onclick="showPage('f1213')">ð 1.2.1.3 <span id="badge-1213" class="nav-badge">0</span></div>
-  <div class="nav-tab" onclick="showPage('f1214')">âï¸ 1.2.1.4 <span id="badge-1214" class="nav-badge">0</span></div>
-  <div class="nav-tab" onclick="showPage('f12122')">ð¤ 1.2.1.22 <span id="badge-12122" class="nav-badge">0</span></div>
-  <div class="nav-tab" onclick="showPage('f12123')">ð¨âð« 1.2.1.23 <span id="badge-12123" class="nav-badge">0</span></div>
+  <div class="nav-tab active" onclick="showPage('dashboard')">📊 ภาพรวม Dashboard</div>
+  <div class="nav-tab" onclick="showPage('f116')">📋 1.1.6 <span id="badge-116" class="nav-badge">0</span></div>
+  <div class="nav-tab" onclick="showPage('f1213')">🎓 1.2.1.3 <span id="badge-1213" class="nav-badge">0</span></div>
+  <div class="nav-tab" onclick="showPage('f1214')">✈️ 1.2.1.4 <span id="badge-1214" class="nav-badge">0</span></div>
+  <div class="nav-tab" onclick="showPage('f12122')">🤝 1.2.1.22 <span id="badge-12122" class="nav-badge">0</span></div>
+  <div class="nav-tab" onclick="showPage('f12123')">👨‍🏫 1.2.1.23 <span id="badge-12123" class="nav-badge">0</span></div>
 </div>
 
 <!-- TOAST -->
-<div class="toast" id="toast">â à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥à¸ªà¸³à¹à¸£à¹à¸</div>
+<div class="toast" id="toast">✅ บันทึกข้อมูลสำเร็จ</div>
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+<!-- ════════════════════════════════════════════════════════════
      PAGE: DASHBOARD
-ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+════════════════════════════════════════════════════════════ -->
 <div id="dashboard" class="page active">
 
   <!-- KPI Cards -->
@@ -218,25 +218,25 @@ tr:hover td{background:#FAF8F8}
   <!-- Charts + Status -->
   <div class="dash-grid">
     <div class="chart-card">
-      <div class="card-title">ð à¸à¸§à¸²à¸¡à¸à¹à¸²à¸§à¸«à¸à¹à¸² vs à¹à¸à¹à¸²à¸«à¸¡à¸²à¸¢ (à¸à¸¸à¸à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸)</div>
+      <div class="card-title">📊 ความก้าวหน้า vs เป้าหมาย (ทุกตัวชี้วัด)</div>
       <div class="chart-wrap"><canvas id="mainChart"></canvas></div>
     </div>
     <div class="chart-card">
-      <div class="card-title">ð¯ à¸ªà¸à¸²à¸à¸°à¸£à¸²à¸¢à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸</div>
+      <div class="card-title">🎯 สถานะรายตัวชี้วัด</div>
       <div class="status-list" id="status-list"></div>
     </div>
   </div>
 
   <!-- Recent Entries -->
   <div class="table-card">
-    <div class="card-title">ð à¸£à¸²à¸¢à¸à¸²à¸£à¸à¸±à¸à¸à¸¶à¸à¸¥à¹à¸²à¸ªà¸¸à¸</div>
+    <div class="card-title">🕐 รายการบันทึกล่าสุด</div>
     <div class="table-wrap">
       <table id="recent-table">
         <thead><tr>
-          <th>à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸</th>
-          <th>à¸à¸·à¹à¸­ / à¸£à¸²à¸¢à¸à¸²à¸£</th>
-          <th>à¸à¹à¸­à¸¡à¸¹à¸¥à¹à¸à¸´à¹à¸¡à¹à¸à¸´à¸¡</th>
-          <th>à¸§à¸±à¸à¸à¸µà¹à¸à¸±à¸à¸à¸¶à¸</th>
+          <th>ตัวชี้วัด</th>
+          <th>ชื่อ / รายการ</th>
+          <th>ข้อมูลเพิ่มเติม</th>
+          <th>วันที่บันทึก</th>
         </tr></thead>
         <tbody id="recent-body"></tbody>
       </table>
@@ -244,64 +244,64 @@ tr:hover td{background:#FAF8F8}
   </div>
 </div>
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-     PAGE: FORM 1.1.6 à¸¨à¸´à¸©à¸¢à¹à¹à¸à¹à¸²à¸à¸¹à¹à¸à¸£à¸´à¸«à¸²à¸£
-ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ════════════════════════════════════════════════════════════
+     PAGE: FORM 1.1.6 ศิษย์เก่าผู้บริหาร
+════════════════════════════════════════════════════════════ -->
 <div id="f116" class="page">
   <div class="form-layout">
     <!-- Left: Form -->
     <div>
       <div class="spec-box">
-        <strong>ð à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸ 1.1.6 â à¸¨à¸´à¸©à¸¢à¹à¹à¸à¹à¸²à¸à¸³à¸£à¸à¸à¸³à¹à¸«à¸à¹à¸à¸à¸¹à¹à¸à¸£à¸´à¸«à¸²à¸£à¸£à¸°à¸à¸±à¸à¸ªà¸¹à¸à¹à¸à¸à¹à¸²à¸à¸à¸£à¸°à¹à¸à¸¨</strong>
-        à¹à¸à¹à¸²à¸«à¸¡à¸²à¸¢: <strong id="spec-116-pct">0%</strong> (400 à¸à¸ à¸£à¸°à¸à¸±à¸à¸¡à¸«à¸²à¸§à¸´à¸à¸¢à¸²à¸¥à¸±à¸¢) Â· Rankings: QS Employer Reputation, THE, U-Multirank, HURs
+        <strong>📌 ตัวชี้วัด 1.1.6 — ศิษย์เก่าดำรงตำแหน่งผู้บริหารระดับสูงในต่างประเทศ</strong>
+        เป้าหมาย: <strong id="spec-116-pct">0%</strong> (400 คน ระดับมหาวิทยาลัย) · Rankings: QS Employer Reputation, THE, U-Multirank, HURs
       </div>
       <div class="prog-row">
-        <span class="prog-label">à¸à¸§à¸²à¸¡à¸à¹à¸²à¸§à¸«à¸à¹à¸²</span>
+        <span class="prog-label">ความก้าวหน้า</span>
         <div class="prog-bar-bg"><div class="prog-bar-fill" id="prog-116" style="width:0%"></div></div>
         <span class="prog-pct" id="prog-116-txt">0/400</span>
       </div>
       <div class="g-header">
-        <h2>ð à¸à¸±à¸à¸à¸¶à¸à¸¨à¸´à¸©à¸¢à¹à¹à¸à¹à¸²à¸à¸¹à¹à¸à¸£à¸´à¸«à¸²à¸£</h2>
-        <p>à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥à¸¨à¸´à¸©à¸¢à¹à¹à¸à¹à¸² à¸¡à¸¡à¸ª. à¸à¸µà¹à¸à¸³à¸£à¸à¸à¸³à¹à¸«à¸à¹à¸à¸à¸¹à¹à¸à¸£à¸´à¸«à¸²à¸£à¸£à¸°à¸à¸±à¸à¸ªà¸¹à¸à¹à¸à¸­à¸à¸à¹à¸à¸£à¸£à¸°à¸«à¸§à¹à¸²à¸à¸à¸£à¸°à¹à¸à¸¨</p>
-        <div class="req-note">* à¸à¸³à¹à¸à¹à¸à¸à¹à¸­à¸à¸à¸£à¸­à¸</div>
+        <h2>📋 บันทึกศิษย์เก่าผู้บริหาร</h2>
+        <p>บันทึกข้อมูลศิษย์เก่า มมส. ที่ดำรงตำแหน่งผู้บริหารระดับสูงในองค์กรระหว่างประเทศ</p>
+        <div class="req-note">* จำเป็นต้องกรอก</div>
       </div>
       <form id="form-116" onsubmit="submitForm(event,'116')">
         <div class="g-section">
-          <div class="g-section-title">à¸à¹à¸­à¸¡à¸¹à¸¥à¸ªà¹à¸§à¸à¸à¸±à¸§</div>
+          <div class="g-section-title">ข้อมูลส่วนตัว</div>
           <div class="g-card">
-            <label class="g-label">à¸à¸·à¹à¸­-à¸à¸²à¸¡à¸ªà¸à¸¸à¸¥ (à¸ à¸²à¸©à¸²à¹à¸à¸¢)<span class="req">*</span></label>
-            <input class="g-input" name="name_th" placeholder="à¹à¸à¹à¸ à¸à¸²à¸¢à¸ªà¸¡à¸à¸²à¸¢ à¹à¸à¸à¸µ" required>
+            <label class="g-label">ชื่อ-นามสกุล (ภาษาไทย)<span class="req">*</span></label>
+            <input class="g-input" name="name_th" placeholder="เช่น นายสมชาย ใจดี" required>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¸·à¹à¸­-à¸à¸²à¸¡à¸ªà¸à¸¸à¸¥ (à¸ à¸²à¸©à¸²à¸­à¸±à¸à¸à¸¤à¸©)<span class="req">*</span></label>
+            <label class="g-label">ชื่อ-นามสกุล (ภาษาอังกฤษ)<span class="req">*</span></label>
             <input class="g-input" name="name_en" placeholder="e.g. Mr. Somchai Jaidee" required>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸£à¸¸à¹à¸à¸à¸µà¸à¸µà¹à¸ªà¸³à¹à¸£à¹à¸à¸à¸²à¸£à¸¨à¸¶à¸à¸©à¸²<span class="req">*</span></label>
-            <input class="g-input" name="grad_year" placeholder="à¹à¸à¹à¸ 2545" type="number" min="2500" max="2570">
+            <label class="g-label">รุ่นปีที่สำเร็จการศึกษา<span class="req">*</span></label>
+            <input class="g-input" name="grad_year" placeholder="เช่น 2545" type="number" min="2500" max="2570">
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¸à¸° / à¸ªà¸²à¸à¸²à¸§à¸´à¸à¸²<span class="req">*</span></label>
-            <input class="g-input" name="faculty" placeholder="à¹à¸à¹à¸ à¸§à¸´à¸à¸¢à¸²à¸à¸²à¸£à¸ªà¸²à¸£à¸ªà¸à¹à¸à¸¨ / à¹à¸à¸à¹à¸à¹à¸¥à¸¢à¸µà¸ªà¸²à¸£à¸ªà¸à¹à¸à¸¨" required>
+            <label class="g-label">คณะ / สาขาวิชา<span class="req">*</span></label>
+            <input class="g-input" name="faculty" placeholder="เช่น วิทยาการสารสนเทศ / เทคโนโลยีสารสนเทศ" required>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸£à¸°à¸à¸±à¸à¸à¸²à¸£à¸¨à¸¶à¸à¸©à¸²</label>
+            <label class="g-label">ระดับการศึกษา</label>
             <select class="g-select" name="degree">
-              <option value="">-- à¹à¸¥à¸·à¸­à¸ --</option>
-              <option>à¸à¸£à¸´à¸à¸à¸²à¸à¸£à¸µ</option>
-              <option>à¸à¸£à¸´à¸à¸à¸²à¹à¸</option>
-              <option>à¸à¸£à¸´à¸à¸à¸²à¹à¸­à¸</option>
+              <option value="">-- เลือก --</option>
+              <option>ปริญญาตรี</option>
+              <option>ปริญญาโท</option>
+              <option>ปริญญาเอก</option>
             </select>
           </div>
         </div>
         <div class="g-section">
-          <div class="g-section-title">à¸à¸³à¹à¸«à¸à¹à¸à¹à¸¥à¸°à¸­à¸à¸à¹à¸à¸£</div>
+          <div class="g-section-title">ตำแหน่งและองค์กร</div>
           <div class="g-card">
-            <label class="g-label">à¸à¸³à¹à¸«à¸à¹à¸à¸à¸±à¸à¸à¸¸à¸à¸±à¸<span class="req">*</span></label>
-            <input class="g-input" name="position" placeholder="à¹à¸à¹à¸ CEO, Vice President, Director" required>
+            <label class="g-label">ตำแหน่งปัจจุบัน<span class="req">*</span></label>
+            <input class="g-input" name="position" placeholder="เช่น CEO, Vice President, Director" required>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸£à¸°à¸à¸±à¸à¸à¸³à¹à¸«à¸à¹à¸</label>
+            <label class="g-label">ระดับตำแหน่ง</label>
             <div class="g-radio-group">
               <div class="g-radio"><input type="radio" name="level" value="C-Level (CEO/CFO/COO/CTO)"><label>C-Level (CEO/CFO/COO/CTO)</label></div>
               <div class="g-radio"><input type="radio" name="level" value="Vice President / SVP"><label>Vice President / SVP</label></div>
@@ -310,402 +310,402 @@ tr:hover td{background:#FAF8F8}
             </div>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¸·à¹à¸­à¸­à¸à¸à¹à¸à¸£ / à¸à¸£à¸´à¸©à¸±à¸<span class="req">*</span></label>
-            <input class="g-input" name="org" placeholder="à¹à¸à¹à¸ Google LLC, United Nations" required>
+            <label class="g-label">ชื่อองค์กร / บริษัท<span class="req">*</span></label>
+            <input class="g-input" name="org" placeholder="เช่น Google LLC, United Nations" required>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¸£à¸°à¹à¸à¸¨à¸à¸µà¹à¸à¸à¸´à¸à¸±à¸à¸´à¸à¸²à¸<span class="req">*</span></label>
-            <input class="g-input" name="country" placeholder="à¹à¸à¹à¸ USA, Japan, Singapore" required>
+            <label class="g-label">ประเทศที่ปฏิบัติงาน<span class="req">*</span></label>
+            <input class="g-input" name="country" placeholder="เช่น USA, Japan, Singapore" required>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¹à¸­à¸à¸à¸²à¸à¸à¸´à¸à¸à¹à¸­ (Email à¸«à¸£à¸·à¸­ LinkedIn)</label>
-            <input class="g-input" name="contact" placeholder="email@example.com à¸«à¸£à¸·à¸­ linkedin.com/in/...">
+            <label class="g-label">ช่องทางติดต่อ (Email หรือ LinkedIn)</label>
+            <input class="g-input" name="contact" placeholder="email@example.com หรือ linkedin.com/in/...">
           </div>
           <div class="g-card">
-            <label class="g-label">à¸«à¸¥à¸±à¸à¸à¸²à¸à¸­à¹à¸²à¸à¸­à¸´à¸ (URL)</label>
+            <label class="g-label">หลักฐานอ้างอิง (URL)</label>
             <input class="g-input" name="ref_url" placeholder="https://...">
           </div>
           <div class="g-card">
-            <label class="g-label">à¸«à¸¡à¸²à¸¢à¹à¸«à¸à¸¸</label>
-            <textarea class="g-textarea" name="note" placeholder="à¸à¹à¸­à¸¡à¸¹à¸¥à¹à¸à¸´à¹à¸¡à¹à¸à¸´à¸¡..."></textarea>
+            <label class="g-label">หมายเหตุ</label>
+            <textarea class="g-textarea" name="note" placeholder="ข้อมูลเพิ่มเติม..."></textarea>
           </div>
         </div>
         <div class="g-submit-row">
-          <button type="button" class="g-clear" onclick="clearForm('form-116')">à¸¥à¹à¸²à¸à¸à¹à¸­à¸¡à¸¹à¸¥</button>
-          <button type="submit" class="g-submit">ð¾ à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥</button>
+          <button type="button" class="g-clear" onclick="clearForm('form-116')">ล้างข้อมูล</button>
+          <button type="submit" class="g-submit">💾 บันทึกข้อมูล</button>
         </div>
       </form>
     </div>
     <!-- Right: Entries -->
     <div class="entries-panel">
       <div class="entries-header">
-        <span class="entries-title">ð à¸£à¸²à¸¢à¸à¸²à¸£à¸à¸µà¹à¸à¸±à¸à¸à¸¶à¸à¹à¸¥à¹à¸§</span>
+        <span class="entries-title">📃 รายการที่บันทึกแล้ว</span>
         <div style="display:flex;gap:8px;align-items:center">
-          <span class="entries-count" id="count-116">0 à¸£à¸²à¸¢à¸à¸²à¸£</span>
-          <button class="btn-export" onclick="exportCSV('116')">â¬ï¸ CSV</button>
+          <span class="entries-count" id="count-116">0 รายการ</span>
+          <button class="btn-export" onclick="exportCSV('116')">⬇️ CSV</button>
         </div>
       </div>
       <div class="table-wrap">
-        <table><thead><tr><th>à¸à¸·à¹à¸­</th><th>à¸à¸³à¹à¸«à¸à¹à¸</th><th>à¸à¸£à¸°à¹à¸à¸¨</th><th></th></tr></thead>
+        <table><thead><tr><th>ชื่อ</th><th>ตำแหน่ง</th><th>ประเทศ</th><th></th></tr></thead>
         <tbody id="entries-116"></tbody></table>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-     PAGE: FORM 1.2.1.3 à¸à¸´à¸ªà¸´à¸ Inbound
-ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ════════════════════════════════════════════════════════════
+     PAGE: FORM 1.2.1.3 นิสิต Inbound
+════════════════════════════════════════════════════════════ -->
 <div id="f1213" class="page">
   <div class="form-layout">
     <div>
       <div class="spec-box">
-        <strong>ð à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸ 1.2.1.3 â à¸à¸´à¸ªà¸´à¸à¸à¹à¸²à¸à¸à¸²à¸à¸´à¹à¸à¹à¸²à¸¡à¸²à¸¨à¸¶à¸à¸©à¸² (Inbound Students)</strong>
-        à¹à¸à¹à¸²à¸«à¸¡à¸²à¸¢: <strong id="spec-1213-pct">0%</strong> (100 à¸à¸) Â· Rankings: QS IR 2.5%, THE IR 7.5%, U-Multirank, HURs
+        <strong>📌 ตัวชี้วัด 1.2.1.3 — นิสิตต่างชาติเข้ามาศึกษา (Inbound Students)</strong>
+        เป้าหมาย: <strong id="spec-1213-pct">0%</strong> (100 คน) · Rankings: QS IR 2.5%, THE IR 7.5%, U-Multirank, HURs
       </div>
       <div class="prog-row">
-        <span class="prog-label">à¸à¸§à¸²à¸¡à¸à¹à¸²à¸§à¸«à¸à¹à¸²</span>
+        <span class="prog-label">ความก้าวหน้า</span>
         <div class="prog-bar-bg"><div class="prog-bar-fill" id="prog-1213" style="width:0%"></div></div>
         <span class="prog-pct" id="prog-1213-txt">0/100</span>
       </div>
       <div class="g-header">
-        <h2>ð à¸à¸±à¸à¸à¸¶à¸à¸à¸´à¸ªà¸´à¸ Inbound</h2>
-        <p>à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥à¸à¸´à¸ªà¸´à¸à¸à¹à¸²à¸à¸à¸²à¸à¸´à¸à¸µà¹à¹à¸à¸´à¸à¸à¸²à¸à¸¡à¸²à¸¨à¸¶à¸à¸©à¸² à¸ à¸¡à¸«à¸²à¸§à¸´à¸à¸¢à¸²à¸¥à¸±à¸¢à¸¡à¸«à¸²à¸ªà¸²à¸£à¸à¸²à¸¡</p>
-        <div class="req-note">* à¸à¸³à¹à¸à¹à¸à¸à¹à¸­à¸à¸à¸£à¸­à¸</div>
+        <h2>🎓 บันทึกนิสิต Inbound</h2>
+        <p>บันทึกข้อมูลนิสิตต่างชาติที่เดินทางมาศึกษา ณ มหาวิทยาลัยมหาสารคาม</p>
+        <div class="req-note">* จำเป็นต้องกรอก</div>
       </div>
       <form id="form-1213" onsubmit="submitForm(event,'1213')">
         <div class="g-section">
-          <div class="g-section-title">à¸à¹à¸­à¸¡à¸¹à¸¥à¸à¸´à¸ªà¸´à¸</div>
+          <div class="g-section-title">ข้อมูลนิสิต</div>
           <div class="g-card">
-            <label class="g-label">à¸à¸·à¹à¸­-à¸à¸²à¸¡à¸ªà¸à¸¸à¸¥ (à¸ à¸²à¸©à¸²à¸­à¸±à¸à¸à¸¤à¸©)<span class="req">*</span></label>
+            <label class="g-label">ชื่อ-นามสกุล (ภาษาอังกฤษ)<span class="req">*</span></label>
             <input class="g-input" name="name_en" placeholder="e.g. John Smith" required>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸ªà¸±à¸à¸à¸²à¸à¸´ / à¸à¸£à¸°à¹à¸à¸¨<span class="req">*</span></label>
-            <input class="g-input" name="country" placeholder="à¹à¸à¹à¸ Chinese, Laotian, Vietnamese" required>
+            <label class="g-label">สัญชาติ / ประเทศ<span class="req">*</span></label>
+            <input class="g-input" name="country" placeholder="เช่น Chinese, Laotian, Vietnamese" required>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸£à¸°à¸à¸±à¸à¸à¸²à¸£à¸¨à¸¶à¸à¸©à¸²<span class="req">*</span></label>
+            <label class="g-label">ระดับการศึกษา<span class="req">*</span></label>
             <select class="g-select" name="degree" required>
-              <option value="">-- à¹à¸¥à¸·à¸­à¸ --</option>
-              <option>à¸à¸£à¸´à¸à¸à¸²à¸à¸£à¸µ</option>
-              <option>à¸à¸£à¸´à¸à¸à¸²à¹à¸</option>
-              <option>à¸à¸£à¸´à¸à¸à¸²à¹à¸­à¸</option>
-              <option>à¹à¸¥à¸à¹à¸à¸¥à¸µà¹à¸¢à¸ (Exchange)</option>
-              <option>à¹à¸à¸£à¹à¸à¸£à¸¡à¸£à¸°à¸¢à¸°à¸ªà¸±à¹à¸</option>
+              <option value="">-- เลือก --</option>
+              <option>ปริญญาตรี</option>
+              <option>ปริญญาโท</option>
+              <option>ปริญญาเอก</option>
+              <option>แลกเปลี่ยน (Exchange)</option>
+              <option>โปรแกรมระยะสั้น</option>
             </select>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¸£à¸°à¹à¸ à¸<span class="req">*</span></label>
+            <label class="g-label">ประเภท<span class="req">*</span></label>
             <div class="g-radio-group">
-              <div class="g-radio"><input type="radio" name="type" value="Degree" required><label>Degree (à¸à¸£à¸´à¸à¸à¸²)</label></div>
-              <div class="g-radio"><input type="radio" name="type" value="Exchange"><label>Exchange (à¹à¸¥à¸à¹à¸à¸¥à¸µà¹à¸¢à¸)</label></div>
+              <div class="g-radio"><input type="radio" name="type" value="Degree" required><label>Degree (ปริญญา)</label></div>
+              <div class="g-radio"><input type="radio" name="type" value="Exchange"><label>Exchange (แลกเปลี่ยน)</label></div>
               <div class="g-radio"><input type="radio" name="type" value="Short Program"><label>Short Program</label></div>
               <div class="g-radio"><input type="radio" name="type" value="Summer School"><label>Summer School</label></div>
             </div>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¸à¸° / à¸ªà¸²à¸à¸²à¸à¸µà¹à¸¥à¸à¸à¸°à¹à¸à¸µà¸¢à¸<span class="req">*</span></label>
-            <input class="g-input" name="faculty" placeholder="à¹à¸à¹à¸ à¸§à¸´à¸à¸¢à¸²à¸¨à¸²à¸ªà¸à¸£à¹ / à¸à¸µà¸§à¸§à¸´à¸à¸¢à¸²" required>
+            <label class="g-label">คณะ / สาขาที่ลงทะเบียน<span class="req">*</span></label>
+            <input class="g-input" name="faculty" placeholder="เช่น วิทยาศาสตร์ / ชีววิทยา" required>
           </div>
         </div>
         <div class="g-section">
-          <div class="g-section-title">à¸£à¸°à¸¢à¸°à¹à¸§à¸¥à¸²à¹à¸¥à¸°à¸à¹à¸à¸ªà¸±à¸à¸à¸±à¸</div>
+          <div class="g-section-title">ระยะเวลาและต้นสังกัด</div>
           <div class="g-card">
-            <label class="g-label">à¸ à¸²à¸à¸à¸²à¸£à¸¨à¸¶à¸à¸©à¸²</label>
+            <label class="g-label">ภาคการศึกษา</label>
             <select class="g-select" name="semester">
-              <option value="">-- à¹à¸¥à¸·à¸­à¸ --</option>
-              <option>à¸ à¸²à¸ 1/2568</option><option>à¸ à¸²à¸ 2/2568</option>
-              <option>à¸ à¸²à¸ 1/2569</option><option>à¸ à¸²à¸ 2/2569</option>
-              <option>à¸ à¸²à¸ 1/2570</option><option>à¸ à¸²à¸ 2/2570</option>
+              <option value="">-- เลือก --</option>
+              <option>ภาค 1/2568</option><option>ภาค 2/2568</option>
+              <option>ภาค 1/2569</option><option>ภาค 2/2569</option>
+              <option>ภาค 1/2570</option><option>ภาค 2/2570</option>
             </select>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸§à¸±à¸à¸à¸µà¹à¸¡à¸²à¸à¸¶à¸</label>
+            <label class="g-label">วันที่มาถึง</label>
             <input class="g-date" type="date" name="date_start">
-            <span style="margin:0 8px;color:var(--grey)">â</span>
-            <label class="g-label" style="display:inline;font-size:13px">à¸§à¸±à¸à¸à¸µà¹à¸à¸¥à¸±à¸</label>
+            <span style="margin:0 8px;color:var(--grey)">—</span>
+            <label class="g-label" style="display:inline;font-size:13px">วันที่กลับ</label>
             <input class="g-date" type="date" name="date_end">
           </div>
           <div class="g-card">
-            <label class="g-label">à¸¡à¸«à¸²à¸§à¸´à¸à¸¢à¸²à¸¥à¸±à¸¢ / à¸ªà¸à¸²à¸à¸±à¸à¸à¹à¸à¸ªà¸±à¸à¸à¸±à¸<span class="req">*</span></label>
+            <label class="g-label">มหาวิทยาลัย / สถาบันต้นสังกัด<span class="req">*</span></label>
             <input class="g-input" name="home_univ" placeholder="e.g. Peking University, NUS" required>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¸¸à¸à¸à¸²à¸£à¸¨à¸¶à¸à¸©à¸² / à¹à¸à¸£à¹à¸à¸£à¸¡</label>
-            <input class="g-input" name="scholarship" placeholder="à¹à¸à¹à¸ ASEAN Scholarship, MSU Scholarship">
+            <label class="g-label">ทุนการศึกษา / โปรแกรม</label>
+            <input class="g-input" name="scholarship" placeholder="เช่น ASEAN Scholarship, MSU Scholarship">
           </div>
           <div class="g-card">
-            <label class="g-label">MOU/MOA à¸­à¹à¸²à¸à¸­à¸´à¸</label>
-            <input class="g-input" name="mou" placeholder="à¹à¸à¹à¸ MSU-NUS-MOU-2565">
+            <label class="g-label">MOU/MOA อ้างอิง</label>
+            <input class="g-input" name="mou" placeholder="เช่น MSU-NUS-MOU-2565">
           </div>
         </div>
         <div class="g-submit-row">
-          <button type="button" class="g-clear" onclick="clearForm('form-1213')">à¸¥à¹à¸²à¸à¸à¹à¸­à¸¡à¸¹à¸¥</button>
-          <button type="submit" class="g-submit">ð¾ à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥</button>
+          <button type="button" class="g-clear" onclick="clearForm('form-1213')">ล้างข้อมูล</button>
+          <button type="submit" class="g-submit">💾 บันทึกข้อมูล</button>
         </div>
       </form>
     </div>
     <div class="entries-panel">
       <div class="entries-header">
-        <span class="entries-title">ð à¸£à¸²à¸¢à¸à¸²à¸£à¸à¸µà¹à¸à¸±à¸à¸à¸¶à¸à¹à¸¥à¹à¸§</span>
+        <span class="entries-title">📃 รายการที่บันทึกแล้ว</span>
         <div style="display:flex;gap:8px;align-items:center">
-          <span class="entries-count" id="count-1213">0 à¸£à¸²à¸¢à¸à¸²à¸£</span>
-          <button class="btn-export" onclick="exportCSV('1213')">â¬ï¸ CSV</button>
+          <span class="entries-count" id="count-1213">0 รายการ</span>
+          <button class="btn-export" onclick="exportCSV('1213')">⬇️ CSV</button>
         </div>
       </div>
       <div class="table-wrap">
-        <table><thead><tr><th>à¸à¸·à¹à¸­</th><th>à¸ªà¸±à¸à¸à¸²à¸à¸´</th><th>à¸à¸£à¸°à¹à¸ à¸</th><th></th></tr></thead>
+        <table><thead><tr><th>ชื่อ</th><th>สัญชาติ</th><th>ประเภท</th><th></th></tr></thead>
         <tbody id="entries-1213"></tbody></table>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-     PAGE: FORM 1.2.1.4 à¸à¸´à¸ªà¸´à¸ Outbound
-ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ════════════════════════════════════════════════════════════
+     PAGE: FORM 1.2.1.4 นิสิต Outbound
+════════════════════════════════════════════════════════════ -->
 <div id="f1214" class="page">
   <div class="form-layout">
     <div>
       <div class="spec-box">
-        <strong>ð à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸ 1.2.1.4 â à¸à¸´à¸ªà¸´à¸à¹à¸à¸¢à¸­à¸­à¸à¹à¸à¸¨à¸¶à¸à¸©à¸²/à¸à¸¶à¸à¸à¸²à¸à¸à¹à¸²à¸à¸à¸£à¸°à¹à¸à¸¨ (Outbound Students)</strong>
-        à¹à¸à¹à¸²à¸«à¸¡à¸²à¸¢: <strong id="spec-1214-pct">0%</strong> (100 à¸à¸) Â· Rankings: QS IR 2.5%, THE IR 7.5%
+        <strong>📌 ตัวชี้วัด 1.2.1.4 — นิสิตไทยออกไปศึกษา/ฝึกงานต่างประเทศ (Outbound Students)</strong>
+        เป้าหมาย: <strong id="spec-1214-pct">0%</strong> (100 คน) · Rankings: QS IR 2.5%, THE IR 7.5%
       </div>
       <div class="prog-row">
-        <span class="prog-label">à¸à¸§à¸²à¸¡à¸à¹à¸²à¸§à¸«à¸à¹à¸²</span>
+        <span class="prog-label">ความก้าวหน้า</span>
         <div class="prog-bar-bg"><div class="prog-bar-fill" id="prog-1214" style="width:0%"></div></div>
         <span class="prog-pct" id="prog-1214-txt">0/100</span>
       </div>
       <div class="g-header">
-        <h2>âï¸ à¸à¸±à¸à¸à¸¶à¸à¸à¸´à¸ªà¸´à¸ Outbound</h2>
-        <p>à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥à¸à¸´à¸ªà¸´à¸ à¸¡à¸¡à¸ª. à¸à¸µà¹à¸­à¸­à¸à¹à¸à¸¨à¸¶à¸à¸©à¸² à¸à¸¶à¸à¸à¸²à¸ à¸«à¸£à¸·à¸­à¹à¸¥à¸à¹à¸à¸¥à¸µà¹à¸¢à¸ à¸ à¸ªà¸à¸²à¸à¸±à¸à¸à¹à¸²à¸à¸à¸£à¸°à¹à¸à¸¨</p>
-        <div class="req-note">* à¸à¸³à¹à¸à¹à¸à¸à¹à¸­à¸à¸à¸£à¸­à¸</div>
+        <h2>✈️ บันทึกนิสิต Outbound</h2>
+        <p>บันทึกข้อมูลนิสิต มมส. ที่ออกไปศึกษา ฝึกงาน หรือแลกเปลี่ยน ณ สถาบันต่างประเทศ</p>
+        <div class="req-note">* จำเป็นต้องกรอก</div>
       </div>
       <form id="form-1214" onsubmit="submitForm(event,'1214')">
         <div class="g-section">
-          <div class="g-section-title">à¸à¹à¸­à¸¡à¸¹à¸¥à¸à¸´à¸ªà¸´à¸</div>
+          <div class="g-section-title">ข้อมูลนิสิต</div>
           <div class="g-card">
-            <label class="g-label">à¸à¸·à¹à¸­-à¸à¸²à¸¡à¸ªà¸à¸¸à¸¥<span class="req">*</span></label>
-            <input class="g-input" name="name_th" placeholder="à¸à¸·à¹à¸­ à¸à¸²à¸¡à¸ªà¸à¸¸à¸¥" required>
+            <label class="g-label">ชื่อ-นามสกุล<span class="req">*</span></label>
+            <input class="g-input" name="name_th" placeholder="ชื่อ นามสกุล" required>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸£à¸«à¸±à¸ªà¸à¸´à¸ªà¸´à¸</label>
-            <input class="g-input" name="student_id" placeholder="à¹à¸à¹à¸ 65010123456">
+            <label class="g-label">รหัสนิสิต</label>
+            <input class="g-input" name="student_id" placeholder="เช่น 65010123456">
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¸à¸° / à¸ªà¸²à¸à¸²à¸§à¸´à¸à¸² (à¸à¸µà¹ à¸¡à¸¡à¸ª.)<span class="req">*</span></label>
-            <input class="g-input" name="faculty" placeholder="à¹à¸à¹à¸ à¸§à¸´à¸¨à¸§à¸à¸£à¸£à¸¡à¸¨à¸²à¸ªà¸à¸£à¹ / à¸§à¸´à¸¨à¸§à¸à¸£à¸£à¸¡à¸à¸­à¸¡à¸à¸´à¸§à¹à¸à¸­à¸£à¹" required>
+            <label class="g-label">คณะ / สาขาวิชา (ที่ มมส.)<span class="req">*</span></label>
+            <input class="g-input" name="faculty" placeholder="เช่น วิศวกรรมศาสตร์ / วิศวกรรมคอมพิวเตอร์" required>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸£à¸°à¸à¸±à¸à¸à¸²à¸£à¸¨à¸¶à¸à¸©à¸²</label>
+            <label class="g-label">ระดับการศึกษา</label>
             <select class="g-select" name="degree">
-              <option value="">-- à¹à¸¥à¸·à¸­à¸ --</option>
-              <option>à¸à¸£à¸´à¸à¸à¸²à¸à¸£à¸µ</option><option>à¸à¸£à¸´à¸à¸à¸²à¹à¸</option><option>à¸à¸£à¸´à¸à¸à¸²à¹à¸­à¸</option>
+              <option value="">-- เลือก --</option>
+              <option>ปริญญาตรี</option><option>ปริญญาโท</option><option>ปริญญาเอก</option>
             </select>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¸£à¸°à¹à¸ à¸à¸à¸´à¸à¸à¸£à¸£à¸¡<span class="req">*</span></label>
+            <label class="g-label">ประเภทกิจกรรม<span class="req">*</span></label>
             <select class="g-select" name="type" required>
-              <option value="">-- à¹à¸¥à¸·à¸­à¸ --</option>
-              <option>Exchange (à¹à¸¥à¸à¹à¸à¸¥à¸µà¹à¸¢à¸)</option>
-              <option>Internship (à¸à¸¶à¸à¸à¸²à¸)</option>
-              <option>Research (à¸§à¸´à¸à¸±à¸¢)</option>
+              <option value="">-- เลือก --</option>
+              <option>Exchange (แลกเปลี่ยน)</option>
+              <option>Internship (ฝึกงาน)</option>
+              <option>Research (วิจัย)</option>
               <option>Summer School</option>
-              <option>Conference (à¸à¸£à¸°à¸à¸¸à¸¡)</option>
+              <option>Conference (ประชุม)</option>
               <option>Study Tour</option>
             </select>
           </div>
         </div>
         <div class="g-section">
-          <div class="g-section-title">à¸ªà¸à¸²à¸à¸±à¸à¸à¸¥à¸²à¸¢à¸à¸²à¸à¹à¸¥à¸°à¸£à¸°à¸¢à¸°à¹à¸§à¸¥à¸²</div>
+          <div class="g-section-title">สถาบันปลายทางและระยะเวลา</div>
           <div class="g-card">
-            <label class="g-label">à¸ªà¸à¸²à¸à¸±à¸à¸à¸¥à¸²à¸¢à¸à¸²à¸<span class="req">*</span></label>
+            <label class="g-label">สถาบันปลายทาง<span class="req">*</span></label>
             <input class="g-input" name="dest_univ" placeholder="e.g. Kyoto University, MIT" required>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¸£à¸°à¹à¸à¸¨à¸à¸¥à¸²à¸¢à¸à¸²à¸<span class="req">*</span></label>
-            <input class="g-input" name="country" placeholder="à¹à¸à¹à¸ Japan, USA, Germany" required>
+            <label class="g-label">ประเทศปลายทาง<span class="req">*</span></label>
+            <input class="g-input" name="country" placeholder="เช่น Japan, USA, Germany" required>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸£à¸°à¸¢à¸°à¹à¸§à¸¥à¸²</label>
-            à¸§à¸±à¸à¹à¸£à¸´à¹à¸¡ <input class="g-date" type="date" name="date_start">
-            &nbsp; à¸§à¸±à¸à¸ªà¸´à¹à¸à¸ªà¸¸à¸ <input class="g-date" type="date" name="date_end">
+            <label class="g-label">ระยะเวลา</label>
+            วันเริ่ม <input class="g-date" type="date" name="date_start">
+            &nbsp; วันสิ้นสุด <input class="g-date" type="date" name="date_end">
           </div>
           <div class="g-card">
-            <label class="g-label">à¹à¸«à¸¥à¹à¸à¸à¸¸à¸ / à¹à¸à¸£à¹à¸à¸£à¸¡</label>
-            <input class="g-input" name="scholarship" placeholder="à¹à¸à¹à¸ JASSO, Fulbright, à¸à¸¸à¸ à¸¡à¸¡à¸ª.">
+            <label class="g-label">แหล่งทุน / โปรแกรม</label>
+            <input class="g-input" name="scholarship" placeholder="เช่น JASSO, Fulbright, ทุน มมส.">
           </div>
           <div class="g-card">
-            <label class="g-label">MOU/MOA à¸­à¹à¸²à¸à¸­à¸´à¸</label>
-            <input class="g-input" name="mou" placeholder="à¹à¸à¹à¸ MSU-Kyoto-MOU-2564">
+            <label class="g-label">MOU/MOA อ้างอิง</label>
+            <input class="g-input" name="mou" placeholder="เช่น MSU-Kyoto-MOU-2564">
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¸¥à¸¥à¸±à¸à¸à¹ / à¸à¸£à¸°à¹à¸¢à¸à¸à¹à¸à¸µà¹à¹à¸à¹à¸£à¸±à¸</label>
-            <textarea class="g-textarea" name="outcome" placeholder="à¸ªà¸£à¸¸à¸à¸ªà¸±à¹à¸à¹..."></textarea>
+            <label class="g-label">ผลลัพธ์ / ประโยชน์ที่ได้รับ</label>
+            <textarea class="g-textarea" name="outcome" placeholder="สรุปสั้นๆ..."></textarea>
           </div>
         </div>
         <div class="g-submit-row">
-          <button type="button" class="g-clear" onclick="clearForm('form-1214')">à¸¥à¹à¸²à¸à¸à¹à¸­à¸¡à¸¹à¸¥</button>
-          <button type="submit" class="g-submit">ð¾ à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥</button>
+          <button type="button" class="g-clear" onclick="clearForm('form-1214')">ล้างข้อมูล</button>
+          <button type="submit" class="g-submit">💾 บันทึกข้อมูล</button>
         </div>
       </form>
     </div>
     <div class="entries-panel">
       <div class="entries-header">
-        <span class="entries-title">ð à¸£à¸²à¸¢à¸à¸²à¸£à¸à¸µà¹à¸à¸±à¸à¸à¸¶à¸à¹à¸¥à¹à¸§</span>
+        <span class="entries-title">📃 รายการที่บันทึกแล้ว</span>
         <div style="display:flex;gap:8px;align-items:center">
-          <span class="entries-count" id="count-1214">0 à¸£à¸²à¸¢à¸à¸²à¸£</span>
-          <button class="btn-export" onclick="exportCSV('1214')">â¬ï¸ CSV</button>
+          <span class="entries-count" id="count-1214">0 รายการ</span>
+          <button class="btn-export" onclick="exportCSV('1214')">⬇️ CSV</button>
         </div>
       </div>
       <div class="table-wrap">
-        <table><thead><tr><th>à¸à¸·à¹à¸­</th><th>à¸à¸£à¸°à¹à¸à¸¨</th><th>à¸à¸£à¸°à¹à¸ à¸</th><th></th></tr></thead>
+        <table><thead><tr><th>ชื่อ</th><th>ประเทศ</th><th>ประเภท</th><th></th></tr></thead>
         <tbody id="entries-1214"></tbody></table>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+<!-- ════════════════════════════════════════════════════════════
      PAGE: FORM 1.2.1.22 MOU/MOA Output
-ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+════════════════════════════════════════════════════════════ -->
 <div id="f12122" class="page">
   <div class="form-layout">
     <div>
       <div class="spec-box">
-        <strong>ð à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸ 1.2.1.22 â MOU/MOA à¸à¸µà¹à¸¡à¸µà¸à¸¥à¸à¸à¸´à¸à¸±à¸à¸´à¸à¸£à¸´à¸ (Active Output)</strong>
-        à¹à¸à¹à¸²à¸«à¸¡à¸²à¸¢: <strong id="spec-12122-pct">0%</strong> (50 à¸à¸à¸±à¸) Â· Rankings: QS Sustainability, THE University Impact
+        <strong>📌 ตัวชี้วัด 1.2.1.22 — MOU/MOA ที่มีผลปฏิบัติจริง (Active Output)</strong>
+        เป้าหมาย: <strong id="spec-12122-pct">0%</strong> (50 ฉบับ) · Rankings: QS Sustainability, THE University Impact
       </div>
       <div class="prog-row">
-        <span class="prog-label">à¸à¸§à¸²à¸¡à¸à¹à¸²à¸§à¸«à¸à¹à¸²</span>
+        <span class="prog-label">ความก้าวหน้า</span>
         <div class="prog-bar-bg"><div class="prog-bar-fill" id="prog-12122" style="width:0%"></div></div>
         <span class="prog-pct" id="prog-12122-txt">0/50</span>
       </div>
       <div class="g-header">
-        <h2>ð¤ à¸à¸±à¸à¸à¸¶à¸ MOU/MOA Output</h2>
-        <p>à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥ MOU à¹à¸¥à¸° MOA à¸à¸µà¹à¸¡à¸µà¸à¸´à¸à¸à¸£à¸£à¸¡à¸à¸§à¸²à¸¡à¸£à¹à¸§à¸¡à¸¡à¸·à¸­à¸à¸£à¸´à¸à¸à¸±à¸à¸ªà¸à¸²à¸à¸±à¸à¸à¹à¸²à¸à¸à¸£à¸°à¹à¸à¸¨</p>
-        <div class="req-note">* à¸à¸³à¹à¸à¹à¸à¸à¹à¸­à¸à¸à¸£à¸­à¸</div>
+        <h2>🤝 บันทึก MOU/MOA Output</h2>
+        <p>บันทึกข้อมูล MOU และ MOA ที่มีกิจกรรมความร่วมมือจริงกับสถาบันต่างประเทศ</p>
+        <div class="req-note">* จำเป็นต้องกรอก</div>
       </div>
       <form id="form-12122" onsubmit="submitForm(event,'12122')">
         <div class="g-section">
-          <div class="g-section-title">à¸à¹à¸­à¸¡à¸¹à¸¥ MOU/MOA</div>
+          <div class="g-section-title">ข้อมูล MOU/MOA</div>
           <div class="g-card">
-            <label class="g-label">à¸à¸·à¹à¸­ MOU/MOA (à¸ à¸²à¸©à¸²à¹à¸à¸¢)<span class="req">*</span></label>
-            <input class="g-input" name="name_th" placeholder="à¹à¸à¹à¸ à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸à¸à¸¥à¸à¸à¸§à¸²à¸¡à¸£à¹à¸§à¸¡à¸¡à¸·à¸­à¸à¸²à¸à¸§à¸´à¸à¸²à¸à¸²à¸£" required>
+            <label class="g-label">ชื่อ MOU/MOA (ภาษาไทย)<span class="req">*</span></label>
+            <input class="g-input" name="name_th" placeholder="เช่น บันทึกข้อตกลงความร่วมมือทางวิชาการ" required>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¸·à¹à¸­ MOU/MOA (à¸ à¸²à¸©à¸²à¸­à¸±à¸à¸à¸¤à¸©)</label>
+            <label class="g-label">ชื่อ MOU/MOA (ภาษาอังกฤษ)</label>
             <input class="g-input" name="name_en" placeholder="e.g. Memorandum of Understanding on Academic Cooperation">
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¸£à¸°à¹à¸ à¸<span class="req">*</span></label>
+            <label class="g-label">ประเภท<span class="req">*</span></label>
             <div class="g-radio-group">
               <div class="g-radio"><input type="radio" name="type" value="MOU" required><label>MOU (Memorandum of Understanding)</label></div>
               <div class="g-radio"><input type="radio" name="type" value="MOA"><label>MOA (Memorandum of Agreement)</label></div>
               <div class="g-radio"><input type="radio" name="type" value="Letter of Intent"><label>Letter of Intent</label></div>
-              <div class="g-radio"><input type="radio" name="type" value="Agreement"><label>Agreement à¸­à¸·à¹à¸à¹</label></div>
+              <div class="g-radio"><input type="radio" name="type" value="Agreement"><label>Agreement อื่นๆ</label></div>
             </div>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸¡à¸«à¸²à¸§à¸´à¸à¸¢à¸²à¸¥à¸±à¸¢ / à¸­à¸à¸à¹à¸à¸£à¸à¸¹à¹à¸ à¸²à¸à¸µ<span class="req">*</span></label>
+            <label class="g-label">มหาวิทยาลัย / องค์กรคู่ภาคี<span class="req">*</span></label>
             <input class="g-input" name="partner" placeholder="e.g. National University of Singapore" required>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¸£à¸°à¹à¸à¸¨à¸à¸­à¸à¸ à¸²à¸à¸µ<span class="req">*</span></label>
-            <input class="g-input" name="country" placeholder="à¹à¸à¹à¸ Singapore, Japan, USA" required>
+            <label class="g-label">ประเทศของภาคี<span class="req">*</span></label>
+            <input class="g-input" name="country" placeholder="เช่น Singapore, Japan, USA" required>
           </div>
         </div>
         <div class="g-section">
-          <div class="g-section-title">à¸ªà¸à¸²à¸à¸°à¹à¸¥à¸°à¸à¸´à¸à¸à¸£à¸£à¸¡</div>
+          <div class="g-section-title">สถานะและกิจกรรม</div>
           <div class="g-card">
-            <label class="g-label">à¸§à¸±à¸à¸à¸µà¹à¸¥à¸à¸à¸²à¸¡</label>
+            <label class="g-label">วันที่ลงนาม</label>
             <input class="g-date" type="date" name="sign_date">
-            <span style="margin:0 8px;color:var(--grey)">à¸§à¸±à¸à¸«à¸¡à¸à¸­à¸²à¸¢à¸¸</span>
+            <span style="margin:0 8px;color:var(--grey)">วันหมดอายุ</span>
             <input class="g-date" type="date" name="expire_date">
           </div>
           <div class="g-card">
-            <label class="g-label">à¸ªà¸à¸²à¸à¸°<span class="req">*</span></label>
+            <label class="g-label">สถานะ<span class="req">*</span></label>
             <select class="g-select" name="status" required>
-              <option value="">-- à¹à¸¥à¸·à¸­à¸ --</option>
-              <option>Active (à¸¡à¸µà¸à¸¥à¸à¸±à¸à¸à¸±à¸)</option>
-              <option>Renewed (à¸à¹à¸­à¸­à¸²à¸¢à¸¸à¹à¸¥à¹à¸§)</option>
-              <option>Pending Renewal (à¸£à¸­à¸à¹à¸­à¸­à¸²à¸¢à¸¸)</option>
-              <option>Expired (à¸«à¸¡à¸à¸­à¸²à¸¢à¸¸)</option>
+              <option value="">-- เลือก --</option>
+              <option>Active (มีผลบังคับ)</option>
+              <option>Renewed (ต่ออายุแล้ว)</option>
+              <option>Pending Renewal (รอต่ออายุ)</option>
+              <option>Expired (หมดอายุ)</option>
             </select>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¸´à¸à¸à¸£à¸£à¸¡à¸à¸µà¹à¹à¸à¸´à¸à¸à¸¶à¹à¸à¸à¸£à¸´à¸<span class="req">*</span></label>
-            <textarea class="g-textarea" name="activities" placeholder="à¸£à¸°à¸à¸¸à¸à¸´à¸à¸à¸£à¸£à¸¡à¸à¸µà¹à¹à¸à¸´à¸à¸à¸¶à¹à¸à¸à¸£à¸´à¸à¹à¸à¸à¸µà¸à¸à¸à¸£à¸°à¸¡à¸²à¸ 2570 (à¸­à¸¢à¹à¸²à¸à¸à¹à¸­à¸¢ 1 à¸à¸´à¸à¸à¸£à¸£à¸¡)..." required></textarea>
+            <label class="g-label">กิจกรรมที่เกิดขึ้นจริง<span class="req">*</span></label>
+            <textarea class="g-textarea" name="activities" placeholder="ระบุกิจกรรมที่เกิดขึ้นจริงในปีงบประมาณ 2570 (อย่างน้อย 1 กิจกรรม)..." required></textarea>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¸³à¸à¸§à¸à¸à¸¹à¹à¹à¸à¹à¸£à¸±à¸à¸à¸£à¸°à¹à¸¢à¸à¸à¹ (à¸à¸´à¸ªà¸´à¸/à¸­à¸²à¸à¸²à¸£à¸¢à¹)</label>
+            <label class="g-label">จำนวนผู้ได้รับประโยชน์ (นิสิต/อาจารย์)</label>
             <input class="g-number" type="number" name="beneficiaries" placeholder="0" min="0">
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¸à¸° / à¸«à¸à¹à¸§à¸¢à¸à¸²à¸à¸à¸µà¹à¸£à¸±à¸à¸à¸´à¸à¸à¸­à¸</label>
-            <input class="g-input" name="faculty" placeholder="à¹à¸à¹à¸ à¸à¸à¸°à¸§à¸´à¸à¸¢à¸²à¸¨à¸²à¸ªà¸à¸£à¹, OIA">
+            <label class="g-label">คณะ / หน่วยงานที่รับผิดชอบ</label>
+            <input class="g-input" name="faculty" placeholder="เช่น คณะวิทยาศาสตร์, OIA">
           </div>
           <div class="g-card">
-            <label class="g-label">à¸«à¸¥à¸±à¸à¸à¸²à¸ (URL)</label>
+            <label class="g-label">หลักฐาน (URL)</label>
             <input class="g-input" name="evidence_url" placeholder="https://...">
           </div>
         </div>
         <div class="g-submit-row">
-          <button type="button" class="g-clear" onclick="clearForm('form-12122')">à¸¥à¹à¸²à¸à¸à¹à¸­à¸¡à¸¹à¸¥</button>
-          <button type="submit" class="g-submit">ð¾ à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥</button>
+          <button type="button" class="g-clear" onclick="clearForm('form-12122')">ล้างข้อมูล</button>
+          <button type="submit" class="g-submit">💾 บันทึกข้อมูล</button>
         </div>
       </form>
     </div>
     <div class="entries-panel">
       <div class="entries-header">
-        <span class="entries-title">ð à¸£à¸²à¸¢à¸à¸²à¸£à¸à¸µà¹à¸à¸±à¸à¸à¸¶à¸à¹à¸¥à¹à¸§</span>
+        <span class="entries-title">📃 รายการที่บันทึกแล้ว</span>
         <div style="display:flex;gap:8px;align-items:center">
-          <span class="entries-count" id="count-12122">0 à¸£à¸²à¸¢à¸à¸²à¸£</span>
-          <button class="btn-export" onclick="exportCSV('12122')">â¬ï¸ CSV</button>
+          <span class="entries-count" id="count-12122">0 รายการ</span>
+          <button class="btn-export" onclick="exportCSV('12122')">⬇️ CSV</button>
         </div>
       </div>
       <div class="table-wrap">
-        <table><thead><tr><th>à¸à¸·à¹à¸­ MOU/MOA</th><th>à¸ à¸²à¸à¸µ</th><th>à¸ªà¸à¸²à¸à¸°</th><th></th></tr></thead>
+        <table><thead><tr><th>ชื่อ MOU/MOA</th><th>ภาคี</th><th>สถานะ</th><th></th></tr></thead>
         <tbody id="entries-12122"></tbody></table>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-     PAGE: FORM 1.2.1.23 à¸­à¸²à¸à¸²à¸£à¸¢à¹à¸à¹à¸²à¸à¸à¸²à¸à¸´
-ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ════════════════════════════════════════════════════════════
+     PAGE: FORM 1.2.1.23 อาจารย์ต่างชาติ
+════════════════════════════════════════════════════════════ -->
 <div id="f12123" class="page">
   <div class="form-layout">
     <div>
       <div class="spec-box">
-        <strong>ð à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸ 1.2.1.23 â à¸­à¸²à¸à¸²à¸£à¸¢à¹à¸à¸²à¸§à¸à¹à¸²à¸à¸à¸²à¸à¸´ (Part-time / Visiting)</strong>
-        à¹à¸à¹à¸²à¸«à¸¡à¸²à¸¢: <strong id="spec-12123-pct">0%</strong> (30 à¸à¸) Â· Rankings: QS IFR 5%, THE IFR 4.5%
+        <strong>📌 ตัวชี้วัด 1.2.1.23 — อาจารย์ชาวต่างชาติ (Part-time / Visiting)</strong>
+        เป้าหมาย: <strong id="spec-12123-pct">0%</strong> (30 คน) · Rankings: QS IFR 5%, THE IFR 4.5%
       </div>
       <div class="prog-row">
-        <span class="prog-label">à¸à¸§à¸²à¸¡à¸à¹à¸²à¸§à¸«à¸à¹à¸²</span>
+        <span class="prog-label">ความก้าวหน้า</span>
         <div class="prog-bar-bg"><div class="prog-bar-fill" id="prog-12123" style="width:0%"></div></div>
         <span class="prog-pct" id="prog-12123-txt">0/30</span>
       </div>
       <div class="g-header">
-        <h2>ð¨âð« à¸à¸±à¸à¸à¸¶à¸à¸­à¸²à¸à¸²à¸£à¸¢à¹à¸à¹à¸²à¸à¸à¸²à¸à¸´</h2>
-        <p>à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥à¸­à¸²à¸à¸²à¸£à¸¢à¹à¸à¸²à¸§à¸à¹à¸²à¸à¸à¸²à¸à¸´à¸à¸µà¹à¸ªà¸­à¸à¹à¸à¸¡à¸«à¸²à¸§à¸´à¸à¸¢à¸²à¸¥à¸±à¸¢à¸¡à¸«à¸²à¸ªà¸²à¸£à¸à¸²à¸¡ à¸à¸±à¹à¸ Part-time à¹à¸¥à¸° Visiting</p>
-        <div class="req-note">* à¸à¸³à¹à¸à¹à¸à¸à¹à¸­à¸à¸à¸£à¸­à¸</div>
+        <h2>👨‍🏫 บันทึกอาจารย์ต่างชาติ</h2>
+        <p>บันทึกข้อมูลอาจารย์ชาวต่างชาติที่สอนในมหาวิทยาลัยมหาสารคาม ทั้ง Part-time และ Visiting</p>
+        <div class="req-note">* จำเป็นต้องกรอก</div>
       </div>
       <form id="form-12123" onsubmit="submitForm(event,'12123')">
         <div class="g-section">
-          <div class="g-section-title">à¸à¹à¸­à¸¡à¸¹à¸¥à¸ªà¹à¸§à¸à¸à¸±à¸§</div>
+          <div class="g-section-title">ข้อมูลส่วนตัว</div>
           <div class="g-card">
-            <label class="g-label">à¸à¸·à¹à¸­-à¸à¸²à¸¡à¸ªà¸à¸¸à¸¥ (à¸ à¸²à¸©à¸²à¸­à¸±à¸à¸à¸¤à¸©)<span class="req">*</span></label>
+            <label class="g-label">ชื่อ-นามสกุล (ภาษาอังกฤษ)<span class="req">*</span></label>
             <input class="g-input" name="name_en" placeholder="e.g. Prof. John Smith" required>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸ªà¸±à¸à¸à¸²à¸à¸´ / à¸à¸£à¸°à¹à¸à¸¨<span class="req">*</span></label>
-            <input class="g-input" name="country" placeholder="à¹à¸à¹à¸ American, Japanese, Chinese" required>
+            <label class="g-label">สัญชาติ / ประเทศ<span class="req">*</span></label>
+            <input class="g-input" name="country" placeholder="เช่น American, Japanese, Chinese" required>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¸£à¸°à¹à¸ à¸<span class="req">*</span></label>
+            <label class="g-label">ประเภท<span class="req">*</span></label>
             <div class="g-radio-group">
               <div class="g-radio"><input type="radio" name="type" value="Part-time" required><label>Part-time Lecturer</label></div>
               <div class="g-radio"><input type="radio" name="type" value="Visiting Professor"><label>Visiting Professor</label></div>
@@ -714,90 +714,90 @@ tr:hover td{background:#FAF8F8}
             </div>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¸à¸° / à¸ à¸²à¸à¸§à¸´à¸à¸² (à¹à¸ à¸¡à¸¡à¸ª.)<span class="req">*</span></label>
-            <input class="g-input" name="faculty" placeholder="à¹à¸à¹à¸ à¸§à¸´à¸à¸¢à¸²à¸¨à¸²à¸ªà¸à¸£à¹ / à¸à¸´à¸ªà¸´à¸à¸ªà¹" required>
+            <label class="g-label">คณะ / ภาควิชา (ใน มมส.)<span class="req">*</span></label>
+            <input class="g-input" name="faculty" placeholder="เช่น วิทยาศาสตร์ / ฟิสิกส์" required>
           </div>
         </div>
         <div class="g-section">
-          <div class="g-section-title">à¸à¸²à¸£à¸ªà¸­à¸à¹à¸¥à¸°à¸ªà¸±à¸à¸à¸±à¸</div>
+          <div class="g-section-title">การสอนและสังกัด</div>
           <div class="g-card">
-            <label class="g-label">à¸£à¸²à¸¢à¸§à¸´à¸à¸²à¸à¸µà¹à¸ªà¸­à¸<span class="req">*</span></label>
-            <input class="g-input" name="course" placeholder="à¹à¸à¹à¸ SC101 Introduction to Physics" required>
+            <label class="g-label">รายวิชาที่สอน<span class="req">*</span></label>
+            <input class="g-input" name="course" placeholder="เช่น SC101 Introduction to Physics" required>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸ à¸²à¸©à¸²à¸à¸µà¹à¹à¸à¹à¸ªà¸­à¸</label>
+            <label class="g-label">ภาษาที่ใช้สอน</label>
             <div class="g-radio-group">
               <div class="g-radio"><input type="radio" name="lang" value="English"><label>English</label></div>
               <div class="g-radio"><input type="radio" name="lang" value="Thai"><label>Thai</label></div>
-              <div class="g-radio"><input type="radio" name="lang" value="Other"><label>à¸­à¸·à¹à¸à¹</label></div>
+              <div class="g-radio"><input type="radio" name="lang" value="Other"><label>อื่นๆ</label></div>
             </div>
           </div>
           <div class="g-card">
-            <label class="g-label">à¸£à¸°à¸¢à¸°à¹à¸§à¸¥à¸²</label>
-            à¸§à¸±à¸à¹à¸£à¸´à¹à¸¡ <input class="g-date" type="date" name="date_start">
-            &nbsp; à¸§à¸±à¸à¸ªà¸´à¹à¸à¸ªà¸¸à¸ <input class="g-date" type="date" name="date_end">
+            <label class="g-label">ระยะเวลา</label>
+            วันเริ่ม <input class="g-date" type="date" name="date_start">
+            &nbsp; วันสิ้นสุด <input class="g-date" type="date" name="date_end">
           </div>
           <div class="g-card">
-            <label class="g-label">à¸à¸³à¸à¸§à¸à¸à¸±à¹à¸§à¹à¸¡à¸à¸ªà¸­à¸/à¸ªà¸±à¸à¸à¸²à¸«à¹</label>
+            <label class="g-label">จำนวนชั่วโมงสอน/สัปดาห์</label>
             <input class="g-number" type="number" name="hours_per_week" placeholder="0" min="0" max="40">
           </div>
           <div class="g-card">
-            <label class="g-label">à¸¡à¸«à¸²à¸§à¸´à¸à¸¢à¸²à¸¥à¸±à¸¢ / à¸ªà¸à¸²à¸à¸±à¸à¸à¹à¸à¸ªà¸±à¸à¸à¸±à¸<span class="req">*</span></label>
+            <label class="g-label">มหาวิทยาลัย / สถาบันต้นสังกัด<span class="req">*</span></label>
             <input class="g-input" name="home_univ" placeholder="e.g. University of Tokyo" required>
           </div>
           <div class="g-card">
-            <label class="g-label">à¹à¸«à¸¥à¹à¸à¸à¸¸à¸ / à¹à¸à¸£à¹à¸à¸£à¸¡</label>
-            <input class="g-input" name="fund" placeholder="à¹à¸à¹à¸ Erasmus+, JSPS, à¸à¸¸à¸à¸ªà¹à¸§à¸à¸à¸±à¸§">
+            <label class="g-label">แหล่งทุน / โปรแกรม</label>
+            <input class="g-input" name="fund" placeholder="เช่น Erasmus+, JSPS, ทุนส่วนตัว">
           </div>
           <div class="g-card">
-            <label class="g-label">MOU/MOA à¸­à¹à¸²à¸à¸­à¸´à¸</label>
-            <input class="g-input" name="mou" placeholder="à¹à¸à¹à¸ MSU-Tokyo-MOU-2566">
+            <label class="g-label">MOU/MOA อ้างอิง</label>
+            <input class="g-input" name="mou" placeholder="เช่น MSU-Tokyo-MOU-2566">
           </div>
         </div>
         <div class="g-submit-row">
-          <button type="button" class="g-clear" onclick="clearForm('form-12123')">à¸¥à¹à¸²à¸à¸à¹à¸­à¸¡à¸¹à¸¥</button>
-          <button type="submit" class="g-submit">ð¾ à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥</button>
+          <button type="button" class="g-clear" onclick="clearForm('form-12123')">ล้างข้อมูล</button>
+          <button type="submit" class="g-submit">💾 บันทึกข้อมูล</button>
         </div>
       </form>
     </div>
     <div class="entries-panel">
       <div class="entries-header">
-        <span class="entries-title">ð à¸£à¸²à¸¢à¸à¸²à¸£à¸à¸µà¹à¸à¸±à¸à¸à¸¶à¸à¹à¸¥à¹à¸§</span>
+        <span class="entries-title">📃 รายการที่บันทึกแล้ว</span>
         <div style="display:flex;gap:8px;align-items:center">
-          <span class="entries-count" id="count-12123">0 à¸£à¸²à¸¢à¸à¸²à¸£</span>
-          <button class="btn-export" onclick="exportCSV('12123')">â¬ï¸ CSV</button>
+          <span class="entries-count" id="count-12123">0 รายการ</span>
+          <button class="btn-export" onclick="exportCSV('12123')">⬇️ CSV</button>
         </div>
       </div>
       <div class="table-wrap">
-        <table><thead><tr><th>à¸à¸·à¹à¸­</th><th>à¸ªà¸±à¸à¸à¸²à¸à¸´</th><th>à¸à¸£à¸°à¹à¸ à¸</th><th></th></tr></thead>
+        <table><thead><tr><th>ชื่อ</th><th>สัญชาติ</th><th>ประเภท</th><th></th></tr></thead>
         <tbody id="entries-12123"></tbody></table>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+<!-- ════════════════════════════════════════════════════════════
      JAVASCRIPT
-ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+════════════════════════════════════════════════════════════ -->
 <script>
 'use strict';
 
-// ââ KPI Config âââââââââââââââââââââââââââââââââââââââââââââ
+// ── KPI Config ─────────────────────────────────────────────
 const KPI = {
-  '116':   { icon:'ð', label:'1.1.6 à¸¨à¸´à¸©à¸¢à¹à¹à¸à¹à¸²à¸à¸¹à¹à¸à¸£à¸´à¸«à¸²à¸£', target:400, color:'#7B1C2E',
+  '116':   { icon:'📋', label:'1.1.6 ศิษย์เก่าผู้บริหาร', target:400, color:'#7B1C2E',
              summary: e => e.name_th||e.name_en, sub: e => (e.position||'')+(e.org?', '+e.org:''), extra: e => e.country||'' },
-  '1213':  { icon:'ð', label:'1.2.1.3 à¸à¸´à¸ªà¸´à¸ Inbound', target:100, color:'#1A73E8',
+  '1213':  { icon:'🎓', label:'1.2.1.3 นิสิต Inbound', target:100, color:'#1A73E8',
              summary: e => e.name_en, sub: e => e.type||'', extra: e => e.country||'' },
-  '1214':  { icon:'âï¸', label:'1.2.1.4 à¸à¸´à¸ªà¸´à¸ Outbound', target:100, color:'#E37400',
+  '1214':  { icon:'✈️', label:'1.2.1.4 นิสิต Outbound', target:100, color:'#E37400',
              summary: e => e.name_th, sub: e => e.type||'', extra: e => e.country||'' },
-  '12122': { icon:'ð¤', label:'1.2.1.22 MOU/MOA', target:50, color:'#1E8E3E',
+  '12122': { icon:'🤝', label:'1.2.1.22 MOU/MOA', target:50, color:'#1E8E3E',
              summary: e => e.name_th, sub: e => e.partner||'', extra: e => e.status||'' },
-  '12123': { icon:'ð¨âð«', label:'1.2.1.23 à¸­à¸²à¸à¸²à¸£à¸¢à¹à¸à¹à¸²à¸à¸à¸²à¸à¸´', target:30, color:'#9334E6',
+  '12123': { icon:'👨‍🏫', label:'1.2.1.23 อาจารย์ต่างชาติ', target:30, color:'#9334E6',
              summary: e => e.name_en, sub: e => e.type||'', extra: e => e.country||'' },
 };
 const KPI_IDS = Object.keys(KPI);
 
-// ââ Data Store (localStorage) ââââââââââââââââââââââââââââââ
+// ── Data Store (localStorage) ──────────────────────────────
 function loadData(id) {
   try { return JSON.parse(localStorage.getItem('oia_kpi_'+id)||'[]'); } catch { return []; }
 }
@@ -811,7 +811,7 @@ function getAllData() {
   return all;
 }
 
-// ââ Page Navigation ââââââââââââââââââââââââââââââââââââââââ
+// ── Page Navigation ────────────────────────────────────────
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -822,7 +822,7 @@ function showPage(id) {
   if(id==='dashboard') refreshDashboard();
 }
 
-// ââ Form Submit ââââââââââââââââââââââââââââââââââââââââââââ
+// ── Form Submit ────────────────────────────────────────────
 function submitForm(event, kpiId) {
   event.preventDefault();
   const form = event.target;
@@ -835,7 +835,7 @@ function submitForm(event, kpiId) {
   arr.push(data);
   saveData(kpiId, arr);
   form.reset();
-  showToast('à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥à¸ªà¸³à¹à¸£à¹à¸! (à¸£à¸²à¸¢à¸à¸²à¸£à¸à¸µà¹ '+ arr.length +')');
+  showToast('บันทึกข้อมูลสำเร็จ! (รายการที่ '+ arr.length +')');
   refreshAll();
 }
 
@@ -846,22 +846,22 @@ function clearForm(formId) {
 function deleteEntry(kpiId, entryId) {
   const arr = loadData(kpiId).filter(e => e._id !== entryId);
   saveData(kpiId, arr);
-  showToast('à¸¥à¸à¸£à¸²à¸¢à¸à¸²à¸£à¹à¸£à¸µà¸¢à¸à¸£à¹à¸­à¸¢', 'orange');
+  showToast('ลบรายการเรียบร้อย', 'orange');
   refreshAll();
 }
 
-// ââ Toast ââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── Toast ──────────────────────────────────────────────────
 let toastTimer;
 function showToast(msg, type='green') {
   const t = document.getElementById('toast');
-  t.textContent = (type==='green'?'â ':'ðï¸ ') + msg;
+  t.textContent = (type==='green'?'✅ ':'🗑️ ') + msg;
   t.style.background = type==='orange' ? 'var(--orange)' : 'var(--green)';
   t.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
 }
 
-// ââ Refresh All ââââââââââââââââââââââââââââââââââââââââââââ
+// ── Refresh All ────────────────────────────────────────────
 function refreshAll() {
   KPI_IDS.forEach(id => {
     const arr = loadData(id);
@@ -885,7 +885,7 @@ function refreshAll() {
 
     // Entry count
     const cnt = document.getElementById('count-'+id);
-    if(cnt) cnt.textContent = arr.length+' à¸£à¸²à¸¢à¸à¸²à¸£';
+    if(cnt) cnt.textContent = arr.length+' รายการ';
 
     // Entries table
     refreshEntriesTable(id, arr);
@@ -897,7 +897,7 @@ function refreshEntriesTable(id, arr) {
   const tbody = document.getElementById('entries-'+id);
   if(!tbody) return;
   if(arr.length===0) {
-    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--grey);padding:20px">à¸¢à¸±à¸à¹à¸¡à¹à¸¡à¸µà¸à¹à¸­à¸¡à¸¹à¸¥ â à¸à¸£à¸­à¸à¹à¸à¸à¸à¸­à¸£à¹à¸¡à¸à¹à¸²à¸à¸à¹à¸²à¸¢à¹à¸à¸·à¹à¸­à¹à¸£à¸´à¹à¸¡à¸à¹à¸</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--grey);padding:20px">ยังไม่มีข้อมูล — กรอกแบบฟอร์มด้านซ้ายเพื่อเริ่มต้น</td></tr>';
     return;
   }
   const cfg = KPI[id];
@@ -906,11 +906,11 @@ function refreshEntriesTable(id, arr) {
       <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${cfg.summary(e)}|'-'}</td>
       <td><span class="badge badge-blue">${cfg.extra(e)||'-'}</span></td>
       <td style="font-size:11px;color:var(--grey)">${cfg.sub(e)||'-'}</td>
-      <td><button class="btn-delete" onclick="deleteEntry('${id}',${e._id})" title="à¸¥à¸">ðï¸</button></td>
+      <td><button class="btn-delete" onclick="deleteEntry('${id}',${e._id})" title="ลบ">🗑️</button></td>
     </tr>`).join('');
 }
 
-// ââ Dashboard ââââââââââââââââââââââââââââââââââââââââââââââ
+// ── Dashboard ──────────────────────────────────────────────
 let mainChart = null;
 
 function refreshDashboard() {
@@ -940,7 +940,7 @@ function refreshDashboard() {
         <div class="kpi-prog-bar"><div class="kpi-prog-fill" style="width:${pct}%;background:${statusColor}"></div></div>
         <div class="kpi-meta">
           <span class="kpi-pct" style="color:${statusColor}">${pct}%</span>
-          <span>à¹à¸à¹à¸² ${cfg.target} à¸£à¸²à¸¢à¸à¸²à¸£</span>
+          <span>เป้า ${cfg.target} รายการ</span>
         </div>
       </div>`;
 
@@ -950,7 +950,7 @@ function refreshDashboard() {
         <span class="status-item-icon">${cfg.icon}</span>
         <div class="status-item-info">
           <div class="status-item-name">${cfg.label}</div>
-          <div class="status-item-sub">${arr.length} / ${cfg.target} à¸£à¸²à¸¢à¸à¸²à¸£</div>
+          <div class="status-item-sub">${arr.length} / ${cfg.target} รายการ</div>
         </div>
         <div class="status-item-right">
           <div class="status-item-pct" style="color:${statusColor}">${pct}%</div>
@@ -972,8 +972,8 @@ function refreshDashboard() {
       data: {
         labels,
         datasets: [
-          { label: 'à¸à¸³à¸à¸§à¸à¸à¸£à¸´à¸', data: counts, backgroundColor: colors.map(c=>c+'CC'), borderColor: colors, borderWidth: 2, borderRadius: 4 },
-          { label: 'à¹à¸à¹à¸²à¸«à¸¡à¸²à¸¢', data: targets, backgroundColor: 'transparent', borderColor: '#CCCCCC', borderWidth: 2, borderDash: [5,5], type: 'line', pointStyle: 'dash', tension: 0 }
+          { label: 'จำนวนจริง', data: counts, backgroundColor: colors.map(c=>c+'CC'), borderColor: colors, borderWidth: 2, borderRadius: 4 },
+          { label: 'เป้าหมาย', data: targets, backgroundColor: 'transparent', borderColor: '#CCCCCC', borderWidth: 2, borderDash: [5,5], type: 'line', pointStyle: 'dash', tension: 0 }
         ]
       },
       options: {
@@ -992,7 +992,7 @@ function refreshDashboard() {
   if(tbody) {
     const all = getAllData().slice(0, 15);
     if(all.length===0) {
-      tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><div class="empty-icon">ð­</div><p>à¸¢à¸±à¸à¹à¸¡à¹à¸¡à¸µà¸à¹à¸­à¸¡à¸¹à¸¥ â à¹à¸à¸à¸£à¸­à¸à¹à¸à¸à¸à¸­à¸£à¹à¸¡à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸à¹à¸à¹à¹à¸¥à¸¢!</p></div></td></tr>';
+      tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><div class="empty-icon">📭</div><p>ยังไม่มีข้อมูล — ไปกรอกแบบฟอร์มตัวชี้วัดได้เลย!</p></div></td></tr>';
     } else {
       tbody.innerHTML = all.map(e => {
         const cfg = KPI[e.kpiId];
@@ -1001,7 +1001,7 @@ function refreshDashboard() {
         return `<tr>
           <td><span class="badge badge-maroon">${cfg.icon} ${cfg.label.split(' ').slice(0,2).join(' ')}</span></td>
           <td>${cfg.summary(e)||'-'}</td>
-          <td style="font-size:12px;color:var(--grey)">${cfg.sub(e)||''} ${cfg.extra(e)?'Â· '+cfg.extra(e):''}</td>
+          <td style="font-size:12px;color:var(--grey)">${cfg.sub(e)||''} ${cfg.extra(e)?'· '+cfg.extra(e):''}</td>
           <td style="font-size:11px;color:var(--grey);white-space:nowrap">${dateStr}</td>
         </tr>`;
       }).join('');
@@ -1009,10 +1009,10 @@ function refreshDashboard() {
   }
 }
 
-// ââ CSV Export âââââââââââââââââââââââââââââââââââââââââââââ
+// ── CSV Export ─────────────────────────────────────────────
 function exportCSV(id) {
   const arr = loadData(id);
-  if(arr.length===0){ alert('à¹à¸¡à¹à¸¡à¸µà¸à¹à¸­à¸¡à¸¹à¸¥à¸ªà¸³à¸«à¸£à¸±à¸ Export'); return; }
+  if(arr.length===0){ alert('ไม่มีข้อมูลสำหรับ Export'); return; }
   const keys = [...new Set(arr.flatMap(e => Object.keys(e)))].filter(k => !k.startsWith('_'));
   const rows = [keys, ...arr.map(e => keys.map(k => (e[k]||'').toString().replace(/,/g,'/')))];
   const csv = '\uFEFF' + rows.map(r => r.join(',')).join('\n');
@@ -1025,7 +1025,7 @@ function exportCSV(id) {
 
 function exportAllCSV() {
   const all = getAllData();
-  if(all.length===0){ alert('à¹à¸¡à¹à¸¡à¸µà¸à¹à¸­à¸¡à¸¹à¸¥à¸ªà¸³à¸«à¸£à¸±à¸ Export'); return; }
+  if(all.length===0){ alert('ไม่มีข้อมูลสำหรับ Export'); return; }
   const keys = ['kpiId', ...new Set(all.flatMap(e => Object.keys(e).filter(k=>!k.startsWith('_'))))];
   const rows = [keys, ...all.map(e => keys.map(k => (e[k]||'').toString().replace(/,/g,'/')))];
   const csv = '\uFEFF' + rows.map(r => r.join(',')).join('\n');
@@ -1036,7 +1036,7 @@ function exportAllCSV() {
   a.click();
 }
 
-// ââ Init âââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── Init ───────────────────────────────────────────────────
 refreshAll();
 </script>
 </body>
