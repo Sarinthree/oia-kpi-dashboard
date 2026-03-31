@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OIA Dashboard | à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸ à¸à¸à¸£. 2570 | à¸¡à¸¡à¸ª.</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --maroon:#7B1C2E;--maroon-dark:#5E1523;--maroon-light:#9E2438;
+  --gold:#C8961A;--gold-light:#F5E6C0;--gold-mid:#E5B930;
+  --blue:#1A73E8;--blue-light:#E8F0FE;
+  --green:#1E8E3E;--green-light:#E8F5E9;
+  --red:#D93025;--red-light:#FDECEA;
+  --orange:#E37400;--orange-light:#FEF3E2;
+  --grey:#5F6368;--grey-light:#F8F9FA;--grey-border:#DADCE0;
+  --bg:#F0F2F5;--white:#FFFFFF;
+  --shadow:0 2px 8px rgba(0,0,0,.10);--shadow-hover:0 4px 16px rgba(0,0,0,.15);
+  --radius:10px;--radius-sm:6px;
+}
+body{font-family:'Segoe UI',Tahoma,'TH Sarabun New',sans-serif;background:var(--bg);color:#202124;font-size:14px;min-height:100vh}
+
+/* ââââââââââââââââââââââ HEADER ââââââââââââââââââââââ */
+.site-header{background:var(--maroon);padding:0 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;height:56px}
+.header-left{display:flex;align-items:center;gap:12px}
+.header-logo{width:36px;height:36px;background:var(--gold-light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px}
+.header-title h1{color:#fff;font-size:15px;font-weight:700;line-height:1.2}
+.header-title p{color:var(--gold-light);font-size:11px;opacity:.85}
+.header-right{display:flex;align-items:center;gap:8px}
+.btn-export-all{background:var(--gold);color:#fff;border:none;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:5px}
+.btn-export-all:hover{background:var(--gold-mid)}
+.gold-bar{height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-mid),var(--gold))}
+
+/* ââââââââââââââââââââââ NAV TABS ââââââââââââââââââââââ */
+.nav-bar{background:var(--white);border-bottom:1px solid var(--grey-border);display:flex;overflow-x:auto;position:sticky;top:56px;z-index:199;-webkit-overflow-scrolling:touch}
+.nav-bar::-webkit-scrollbar{height:3px}
+.nav-bar::-webkit-scrollbar-thumb{background:var(--maroon);border-radius:2px}
+.nav-tab{padding:13px 20px;font-size:12.5px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;color:var(--grey);transition:.15s;font-weight:500;display:flex;align-items:center;gap:6px}
+.nav-tab:hover{color:var(--maroon);background:#FAF0F2}
+.nav-tab.active{border-bottom-color:var(--maroon);color:var(--maroon);font-weight:700}
+.nav-badge{background:var(--maroon);color:#fff;border-radius:10px;padding:1px 7px;font-size:10px;font-weight:700;min-width:18px;text-align:center}
+.nav-badge.green{background:var(--green)}
+.nav-badge.orange{background:var(--orange)}
+
+/* ââââââââââââââââââââââ PAGE LAYOUT ââââââââââââââââââââââ */
+.page{display:none;padding:20px 24px;max-width:1280px;margin:0 auto}
+.page.active{display:block}
+
+/* ââââââââââââââââââââââ DASHBOARD ââââââââââââââââââââââ */
+/* Summary Cards Row */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px}
+.kpi-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;border-left:5px solid var(--maroon);transition:.2s;cursor:pointer;position:relative;overflow:hidden}
+.kpi-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px)}
+.kpi-card::after{content:'';position:absolute;right:-20px;top:-20px;width:80px;height:80px;border-radius:50%;opacity:.06;background:var(--maroon)}
+.kpi-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.kpi-icon{font-size:22px}
+.kpi-status-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.kpi-number{font-size:32px;font-weight:700;color:var(--maroon);line-height:1;margin-bottom:4px}
+.kpi-number span{font-size:14px;color:var(--grey);font-weight:400}
+.kpi-label{font-size:12px;color:var(--grey);margin-bottom:10px}
+.kpi-prog-bar{height:5px;background:#EEE;border-radius:3px;overflow:hidden;margin-bottom:6px}
+.kpi-prog-fill{height:100%;border-radius:3px;background:var(--maroon);transition:width .6s ease}
+.kpi-meta{display:flex;justify-content:space-between;font-size:11px;color:var(--grey)}
+.kpi-pct{font-weight:700;font-size:13px}
+
+/* Chart section */
+.dash-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px}
+@media(max-width:768px){.dash-grid{grid-template-columns:1fr}}
+.chart-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+.card-title{font-size:13px;font-weight:700;color:var(--maroon);margin-bottom:16px;display:flex;align-items:center;gap:7px;border-bottom:1px solid #F0F0F0;padding-bottom:10px}
+.chart-wrap{position:relative;height:220px}
+
+/* Status summary */
+.status-list{display:flex;flex-direction:column;gap:8px}
+.status-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius-sm);background:var(--grey-light);transition:.15s}
+.status-item:hover{background:#ECEEF2}
+.status-item-icon{font-size:16px;width:24px;text-align:center}
+.status-item-info{flex:1;min-width:0}
+.status-item-name{font-size:11px;font-weight:600;color:#333;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.status-item-sub{font-size:10px;color:var(--grey)}
+.status-item-right{text-align:right;flex-shrink:0}
+.status-item-pct{font-size:13px;font-weight:700}
+
+/* Recent entries table */
+.table-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:16px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead tr{background:var(--maroon);color:#fff}
+th{padding:10px 12px;text-align:left;font-weight:600;font-size:12px;white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid #F0F0F0;vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#FAF8F8}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
+.badge-maroon{background:var(--maroon);color:#fff}
+.badge-green{background:var(--green-light);color:var(--green)}
+.badge-blue{background:var(--blue-light);color:var(--blue)}
+.badge-orange{background:var(--orange-light);color:var(--orange)}
+.badge-red{background:var(--red-light);color:var(--red)}
+.empty-state{text-align:center;padding:40px 20px;color:var(--grey)}
+.empty-state .empty-icon{font-size:40px;margin-bottom:10px;opacity:.5}
+.empty-state p{font-size:13px}
+
+/* ââââââââââââââââââââââ FORM PAGES ââââââââââââââââââââââ */
+.form-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+@media(max-width:900px){.form-layout{grid-template-columns:1fr}}
+.g-container{max-width:100%}
+
+.spec-box{background:var(--gold-light);border-left:4px solid var(--gold);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:12px 16px;margin-bottom:16px;font-size:12px;color:#5A3E00}
+.spec-box strong{display:block;font-size:13px;margin-bottom:4px;color:var(--maroon)}
+
+.g-header{background:var(--white);border-radius:var(--radius);border-top:8px solid var(--maroon);box-shadow:var(--shadow);padding:20px 24px 16px;margin-bottom:12px}
+.g-header h2{font-size:20px;font-weight:500;color:#202124}
+.g-header p{font-size:13px;color:#444;margin-top:6px;line-height:1.6}
+.g-header .req-note{font-size:11px;color:var(--red);margin-top:10px}
+
+.g-section{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 24px;margin-bottom:10px;border-left:4px solid var(--maroon)}
+.g-section-title{font-size:14px;font-weight:700;color:var(--maroon);margin-bottom:14px;border-bottom:1px solid #F0F0F0;padding-bottom:8px}
+
+.g-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 24px;margin-bottom:8px;transition:.15s}
+.g-card:hover{box-shadow:var(--shadow-hover)}
+.g-label{font-size:14px;font-weight:500;color:#202124;margin-bottom:6px;display:block}
+.g-label .req{color:var(--red);margin-left:3px}
+.g-hint{font-size:11px;color:var(--grey);margin-bottom:8px;font-style:italic}
+.g-input{width:100%;border:none;border-bottom:1.5px solid var(--grey-border);padding:7px 0;font-size:13px;color:#3C4043;background:transparent;outline:none;transition:.2s;font-family:inherit}
+.g-input:focus{border-bottom-color:var(--blue)}
+.g-select{width:100%;border:none;border-bottom:1.5px solid var(--grey-border);padding:7px 0;font-size:13px;background:transparent;color:#3C4043;cursor:pointer;font-family:inherit;outline:none}
+.g-select:focus{border-bottom-color:var(--blue)}
+.g-date{border:none;border-bottom:1.5px solid var(--grey-border);padding:7px 0;font-size:13px;width:160px;color:#3C4043;outline:none}
+.g-date:focus{border-bottom-color:var(--blue)}
+.g-number{border:none;border-bottom:1.5px solid var(--grey-border);padding:7px 0;font-size:13px;width:100px;color:#3C4043;outline:none}
+.g-textarea{width:100%;border:1px solid var(--grey-border);border-radius:4px;padding:9px;font-size:13px;color:#3C4043;resize:vertical;min-height:64px;outline:none;font-family:inherit}
+.g-textarea:focus{border-color:var(--blue)}
+.g-radio-group,.g-check-group{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.g-radio,.g-check{display:flex;align-items:center;gap:8px;cursor:pointer;padding:5px 6px;border-radius:4px;transition:.15s}
+.g-radio:hover,.g-check:hover{background:#F5F5F5}
+.g-radio input,.g-check input{width:16px;height:16px;accent-color:var(--maroon);cursor:pointer}
+.g-radio label,.g-check label{font-size:13px;color:#3C4043;cursor:pointer}
+
+.g-submit-row{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:12px;border-top:1px solid #F0F0F0}
+.g-submit{background:var(--maroon);color:#fff;border:none;padding:10px 28px;border-radius:4px;font-size:14px;font-weight:600;cursor:pointer;transition:.2s;font-family:inherit}
+.g-submit:hover{background:var(--maroon-dark)}
+.g-clear{color:var(--blue);font-size:13px;cursor:pointer;background:none;border:none;padding:8px;font-family:inherit}
+
+/* validation feedback */
+.field-error{font-size:11px;color:var(--red);margin-top:4px;display:none}
+.g-input.invalid,.g-select.invalid{border-bottom-color:var(--red)}
+.field-error.show{display:block}
+
+/* success toast */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--green);color:#fff;padding:12px 20px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;box-shadow:0 4px 16px rgba(0,0,0,.2);z-index:999;transform:translateY(80px);opacity:0;transition:.3s;display:flex;align-items:center;gap:8px}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* progress in form header */
+.prog-row{display:flex;align-items:center;gap:10px;background:var(--white);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:12px;box-shadow:var(--shadow)}
+.prog-label{font-size:11px;color:var(--grey);white-space:nowrap}
+.prog-bar-bg{flex:1;height:5px;background:#EEE;border-radius:3px}
+.prog-bar-fill{height:100%;background:var(--maroon);border-radius:3px;transition:width .5s}
+.prog-pct{font-size:12px;font-weight:700;color:var(--maroon);white-space:nowrap}
+
+/* Entries panel */
+.entries-panel{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+.entries-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;border-bottom:1px solid #F0F0F0;padding-bottom:10px}
+.entries-title{font-size:13px;font-weight:700;color:var(--maroon)}
+.btn-export{background:none;border:1.5px solid var(--maroon);color:var(--maroon);padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;transition:.2s}
+.btn-export:hover{background:var(--maroon);color:#fff}
+.btn-delete{background:none;border:none;color:var(--grey);cursor:pointer;font-size:14px;padding:3px 6px;border-radius:3px;transition:.15s}
+.btn-delete:hover{color:var(--red);background:var(--red-light)}
+.entries-count{font-size:12px;color:var(--grey)}
+
+/* Responsive tweaks */
+@media(max-width:600px){
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .site-header{padding:0 16px}
+  .page{padding:14px 12px}
+  .nav-tab{padding:11px 14px;font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="site-header">
+  <div class="header-left">
+    <div class="header-logo">ðï¸</div>
+    <div class="header-title">
+      <h1>OIA Dashboard | à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸ à¸à¸à¸£. 2570</h1>
+      <p>à¸à¸¥à¸¸à¹à¸¡à¸à¸²à¸à¸à¸´à¸à¸à¸²à¸£à¸à¹à¸²à¸à¸à¸£à¸°à¹à¸à¸¨ (OIA) Â· à¸¡à¸«à¸²à¸§à¸´à¸à¸¢à¸²à¸¥à¸±à¸¢à¸¡à¸«à¸²à¸ªà¸²à¸£à¸à¸²à¸¡</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <button class="btn-export-all" onclick="exportAllCSV()">â¬ï¸ Export à¸à¸±à¹à¸à¸«à¸¡à¸</button>
+  </div>
+</div>
+<div class="gold-bar"></div>
+
+<!-- NAV TABS -->
+<div class="nav-bar">
+  <div class="nav-tab active" onclick="showPage('dashboard')">ð à¸ à¸²à¸à¸£à¸§à¸¡ Dashboard</div>
+  <div class="nav-tab" onclick="showPage('f116')">ð 1.1.6 <span id="badge-116" class="nav-badge">0</span></div>
+  <div class="nav-tab" onclick="showPage('f1213')">ð 1.2.1.3 <span id="badge-1213" class="nav-badge">0</span></div>
+  <div class="nav-tab" onclick="showPage('f1214')">âï¸ 1.2.1.4 <span id="badge-1214" class="nav-badge">0</span></div>
+  <div class="nav-tab" onclick="showPage('f12122')">ð¤ 1.2.1.22 <span id="badge-12122" class="nav-badge">0</span></div>
+  <div class="nav-tab" onclick="showPage('f12123')">ð¨âð« 1.2.1.23 <span id="badge-12123" class="nav-badge">0</span></div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">â à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥à¸ªà¸³à¹à¸£à¹à¸</div>
+
+<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+     PAGE: DASHBOARD
+ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<div id="dashboard" class="page active">
+
+  <!-- KPI Cards -->
+  <div class="kpi-grid" id="kpi-grid"></div>
+
+  <!-- Charts + Status -->
+  <div class="dash-grid">
+    <div class="chart-card">
+      <div class="card-title">ð à¸à¸§à¸²à¸¡à¸à¹à¸²à¸§à¸«à¸à¹à¸² vs à¹à¸à¹à¸²à¸«à¸¡à¸²à¸¢ (à¸à¸¸à¸à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸)</div>
+      <div class="chart-wrap"><canvas id="mainChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="card-title">ð¯ à¸ªà¸à¸²à¸à¸°à¸£à¸²à¸¢à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸</div>
+      <div class="status-list" id="status-list"></div>
+    </div>
+  </div>
+
+  <!-- Recent Entries -->
+  <div class="table-card">
+    <div class="card-title">ð à¸£à¸²à¸¢à¸à¸²à¸£à¸à¸±à¸à¸à¸¶à¸à¸¥à¹à¸²à¸ªà¸¸à¸</div>
+    <div class="table-wrap">
+      <table id="recent-table">
+        <thead><tr>
+          <th>à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸</th>
+          <th>à¸à¸·à¹à¸­ / à¸£à¸²à¸¢à¸à¸²à¸£</th>
+          <th>à¸à¹à¸­à¸¡à¸¹à¸¥à¹à¸à¸´à¹à¸¡à¹à¸à¸´à¸¡</th>
+          <th>à¸§à¸±à¸à¸à¸µà¹à¸à¸±à¸à¸à¸¶à¸</th>
+        </tr></thead>
+        <tbody id="recent-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+     PAGE: FORM 1.1.6 à¸¨à¸´à¸©à¸¢à¹à¹à¸à¹à¸²à¸à¸¹à¹à¸à¸£à¸´à¸«à¸²à¸£
+ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<div id="f116" class="page">
+  <div class="form-layout">
+    <!-- Left: Form -->
+    <div>
+      <div class="spec-box">
+        <strong>ð à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸ 1.1.6 â à¸¨à¸´à¸©à¸¢à¹à¹à¸à¹à¸²à¸à¸³à¸£à¸à¸à¸³à¹à¸«à¸à¹à¸à¸à¸¹à¹à¸à¸£à¸´à¸«à¸²à¸£à¸£à¸°à¸à¸±à¸à¸ªà¸¹à¸à¹à¸à¸à¹à¸²à¸à¸à¸£à¸°à¹à¸à¸¨</strong>
+        à¹à¸à¹à¸²à¸«à¸¡à¸²à¸¢: <strong id="spec-116-pct">0%</strong> (400 à¸à¸ à¸£à¸°à¸à¸±à¸à¸¡à¸«à¸²à¸§à¸´à¸à¸¢à¸²à¸¥à¸±à¸¢) Â· Rankings: QS Employer Reputation, THE, U-Multirank, HURs
+      </div>
+      <div class="prog-row">
+        <span class="prog-label">à¸à¸§à¸²à¸¡à¸à¹à¸²à¸§à¸«à¸à¹à¸²</span>
+        <div class="prog-bar-bg"><div class="prog-bar-fill" id="prog-116" style="width:0%"></div></div>
+        <span class="prog-pct" id="prog-116-txt">0/400</span>
+      </div>
+      <div class="g-header">
+        <h2>ð à¸à¸±à¸à¸à¸¶à¸à¸¨à¸´à¸©à¸¢à¹à¹à¸à¹à¸²à¸à¸¹à¹à¸à¸£à¸´à¸«à¸²à¸£</h2>
+        <p>à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥à¸¨à¸´à¸©à¸¢à¹à¹à¸à¹à¸² à¸¡à¸¡à¸ª. à¸à¸µà¹à¸à¸³à¸£à¸à¸à¸³à¹à¸«à¸à¹à¸à¸à¸¹à¹à¸à¸£à¸´à¸«à¸²à¸£à¸£à¸°à¸à¸±à¸à¸ªà¸¹à¸à¹à¸à¸­à¸à¸à¹à¸à¸£à¸£à¸°à¸«à¸§à¹à¸²à¸à¸à¸£à¸°à¹à¸à¸¨</p>
+        <div class="req-note">* à¸à¸³à¹à¸à¹à¸à¸à¹à¸­à¸à¸à¸£à¸­à¸</div>
+      </div>
+      <form id="form-116" onsubmit="submitForm(event,'116')">
+        <div class="g-section">
+          <div class="g-section-title">à¸à¹à¸­à¸¡à¸¹à¸¥à¸ªà¹à¸§à¸à¸à¸±à¸§</div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸·à¹à¸­-à¸à¸²à¸¡à¸ªà¸à¸¸à¸¥ (à¸ à¸²à¸©à¸²à¹à¸à¸¢)<span class="req">*</span></label>
+            <input class="g-input" name="name_th" placeholder="à¹à¸à¹à¸ à¸à¸²à¸¢à¸ªà¸¡à¸à¸²à¸¢ à¹à¸à¸à¸µ" required>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸·à¹à¸­-à¸à¸²à¸¡à¸ªà¸à¸¸à¸¥ (à¸ à¸²à¸©à¸²à¸­à¸±à¸à¸à¸¤à¸©)<span class="req">*</span></label>
+            <input class="g-input" name="name_en" placeholder="e.g. Mr. Somchai Jaidee" required>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸£à¸¸à¹à¸à¸à¸µà¸à¸µà¹à¸ªà¸³à¹à¸£à¹à¸à¸à¸²à¸£à¸¨à¸¶à¸à¸©à¸²<span class="req">*</span></label>
+            <input class="g-input" name="grad_year" placeholder="à¹à¸à¹à¸ 2545" type="number" min="2500" max="2570">
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸à¸° / à¸ªà¸²à¸à¸²à¸§à¸´à¸à¸²<span class="req">*</span></label>
+            <input class="g-input" name="faculty" placeholder="à¹à¸à¹à¸ à¸§à¸´à¸à¸¢à¸²à¸à¸²à¸£à¸ªà¸²à¸£à¸ªà¸à¹à¸à¸¨ / à¹à¸à¸à¹à¸à¹à¸¥à¸¢à¸µà¸ªà¸²à¸£à¸ªà¸à¹à¸à¸¨" required>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸£à¸°à¸à¸±à¸à¸à¸²à¸£à¸¨à¸¶à¸à¸©à¸²</label>
+            <select class="g-select" name="degree">
+              <option value="">-- à¹à¸¥à¸·à¸­à¸ --</option>
+              <option>à¸à¸£à¸´à¸à¸à¸²à¸à¸£à¸µ</option>
+              <option>à¸à¸£à¸´à¸à¸à¸²à¹à¸</option>
+              <option>à¸à¸£à¸´à¸à¸à¸²à¹à¸­à¸</option>
+            </select>
+          </div>
+        </div>
+        <div class="g-section">
+          <div class="g-section-title">à¸à¸³à¹à¸«à¸à¹à¸à¹à¸¥à¸°à¸­à¸à¸à¹à¸à¸£</div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸³à¹à¸«à¸à¹à¸à¸à¸±à¸à¸à¸¸à¸à¸±à¸<span class="req">*</span></label>
+            <input class="g-input" name="position" placeholder="à¹à¸à¹à¸ CEO, Vice President, Director" required>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸£à¸°à¸à¸±à¸à¸à¸³à¹à¸«à¸à¹à¸</label>
+            <div class="g-radio-group">
+              <div class="g-radio"><input type="radio" name="level" value="C-Level (CEO/CFO/COO/CTO)"><label>C-Level (CEO/CFO/COO/CTO)</label></div>
+              <div class="g-radio"><input type="radio" name="level" value="Vice President / SVP"><label>Vice President / SVP</label></div>
+              <div class="g-radio"><input type="radio" name="level" value="Director / GM"><label>Director / GM</label></div>
+              <div class="g-radio"><input type="radio" name="level" value="Senior Manager"><label>Senior Manager</label></div>
+            </div>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸·à¹à¸­à¸­à¸à¸à¹à¸à¸£ / à¸à¸£à¸´à¸©à¸±à¸<span class="req">*</span></label>
+            <input class="g-input" name="org" placeholder="à¹à¸à¹à¸ Google LLC, United Nations" required>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸£à¸°à¹à¸à¸¨à¸à¸µà¹à¸à¸à¸´à¸à¸±à¸à¸´à¸à¸²à¸<span class="req">*</span></label>
+            <input class="g-input" name="country" placeholder="à¹à¸à¹à¸ USA, Japan, Singapore" required>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¹à¸­à¸à¸à¸²à¸à¸à¸´à¸à¸à¹à¸­ (Email à¸«à¸£à¸·à¸­ LinkedIn)</label>
+            <input class="g-input" name="contact" placeholder="email@example.com à¸«à¸£à¸·à¸­ linkedin.com/in/...">
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸«à¸¥à¸±à¸à¸à¸²à¸à¸­à¹à¸²à¸à¸­à¸´à¸ (URL)</label>
+            <input class="g-input" name="ref_url" placeholder="https://...">
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸«à¸¡à¸²à¸¢à¹à¸«à¸à¸¸</label>
+            <textarea class="g-textarea" name="note" placeholder="à¸à¹à¸­à¸¡à¸¹à¸¥à¹à¸à¸´à¹à¸¡à¹à¸à¸´à¸¡..."></textarea>
+          </div>
+        </div>
+        <div class="g-submit-row">
+          <button type="button" class="g-clear" onclick="clearForm('form-116')">à¸¥à¹à¸²à¸à¸à¹à¸­à¸¡à¸¹à¸¥</button>
+          <button type="submit" class="g-submit">ð¾ à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥</button>
+        </div>
+      </form>
+    </div>
+    <!-- Right: Entries -->
+    <div class="entries-panel">
+      <div class="entries-header">
+        <span class="entries-title">ð à¸£à¸²à¸¢à¸à¸²à¸£à¸à¸µà¹à¸à¸±à¸à¸à¸¶à¸à¹à¸¥à¹à¸§</span>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="entries-count" id="count-116">0 à¸£à¸²à¸¢à¸à¸²à¸£</span>
+          <button class="btn-export" onclick="exportCSV('116')">â¬ï¸ CSV</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table><thead><tr><th>à¸à¸·à¹à¸­</th><th>à¸à¸³à¹à¸«à¸à¹à¸</th><th>à¸à¸£à¸°à¹à¸à¸¨</th><th></th></tr></thead>
+        <tbody id="entries-116"></tbody></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+     PAGE: FORM 1.2.1.3 à¸à¸´à¸ªà¸´à¸ Inbound
+ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<div id="f1213" class="page">
+  <div class="form-layout">
+    <div>
+      <div class="spec-box">
+        <strong>ð à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸ 1.2.1.3 â à¸à¸´à¸ªà¸´à¸à¸à¹à¸²à¸à¸à¸²à¸à¸´à¹à¸à¹à¸²à¸¡à¸²à¸¨à¸¶à¸à¸©à¸² (Inbound Students)</strong>
+        à¹à¸à¹à¸²à¸«à¸¡à¸²à¸¢: <strong id="spec-1213-pct">0%</strong> (100 à¸à¸) Â· Rankings: QS IR 2.5%, THE IR 7.5%, U-Multirank, HURs
+      </div>
+      <div class="prog-row">
+        <span class="prog-label">à¸à¸§à¸²à¸¡à¸à¹à¸²à¸§à¸«à¸à¹à¸²</span>
+        <div class="prog-bar-bg"><div class="prog-bar-fill" id="prog-1213" style="width:0%"></div></div>
+        <span class="prog-pct" id="prog-1213-txt">0/100</span>
+      </div>
+      <div class="g-header">
+        <h2>ð à¸à¸±à¸à¸à¸¶à¸à¸à¸´à¸ªà¸´à¸ Inbound</h2>
+        <p>à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥à¸à¸´à¸ªà¸´à¸à¸à¹à¸²à¸à¸à¸²à¸à¸´à¸à¸µà¹à¹à¸à¸´à¸à¸à¸²à¸à¸¡à¸²à¸¨à¸¶à¸à¸©à¸² à¸ à¸¡à¸«à¸²à¸§à¸´à¸à¸¢à¸²à¸¥à¸±à¸¢à¸¡à¸«à¸²à¸ªà¸²à¸£à¸à¸²à¸¡</p>
+        <div class="req-note">* à¸à¸³à¹à¸à¹à¸à¸à¹à¸­à¸à¸à¸£à¸­à¸</div>
+      </div>
+      <form id="form-1213" onsubmit="submitForm(event,'1213')">
+        <div class="g-section">
+          <div class="g-section-title">à¸à¹à¸­à¸¡à¸¹à¸¥à¸à¸´à¸ªà¸´à¸</div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸·à¹à¸­-à¸à¸²à¸¡à¸ªà¸à¸¸à¸¥ (à¸ à¸²à¸©à¸²à¸­à¸±à¸à¸à¸¤à¸©)<span class="req">*</span></label>
+            <input class="g-input" name="name_en" placeholder="e.g. John Smith" required>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸ªà¸±à¸à¸à¸²à¸à¸´ / à¸à¸£à¸°à¹à¸à¸¨<span class="req">*</span></label>
+            <input class="g-input" name="country" placeholder="à¹à¸à¹à¸ Chinese, Laotian, Vietnamese" required>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸£à¸°à¸à¸±à¸à¸à¸²à¸£à¸¨à¸¶à¸à¸©à¸²<span class="req">*</span></label>
+            <select class="g-select" name="degree" required>
+              <option value="">-- à¹à¸¥à¸·à¸­à¸ --</option>
+              <option>à¸à¸£à¸´à¸à¸à¸²à¸à¸£à¸µ</option>
+              <option>à¸à¸£à¸´à¸à¸à¸²à¹à¸</option>
+              <option>à¸à¸£à¸´à¸à¸à¸²à¹à¸­à¸</option>
+              <option>à¹à¸¥à¸à¹à¸à¸¥à¸µà¹à¸¢à¸ (Exchange)</option>
+              <option>à¹à¸à¸£à¹à¸à¸£à¸¡à¸£à¸°à¸¢à¸°à¸ªà¸±à¹à¸</option>
+            </select>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸£à¸°à¹à¸ à¸<span class="req">*</span></label>
+            <div class="g-radio-group">
+              <div class="g-radio"><input type="radio" name="type" value="Degree" required><label>Degree (à¸à¸£à¸´à¸à¸à¸²)</label></div>
+              <div class="g-radio"><input type="radio" name="type" value="Exchange"><label>Exchange (à¹à¸¥à¸à¹à¸à¸¥à¸µà¹à¸¢à¸)</label></div>
+              <div class="g-radio"><input type="radio" name="type" value="Short Program"><label>Short Program</label></div>
+              <div class="g-radio"><input type="radio" name="type" value="Summer School"><label>Summer School</label></div>
+            </div>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸à¸° / à¸ªà¸²à¸à¸²à¸à¸µà¹à¸¥à¸à¸à¸°à¹à¸à¸µà¸¢à¸<span class="req">*</span></label>
+            <input class="g-input" name="faculty" placeholder="à¹à¸à¹à¸ à¸§à¸´à¸à¸¢à¸²à¸¨à¸²à¸ªà¸à¸£à¹ / à¸à¸µà¸§à¸§à¸´à¸à¸¢à¸²" required>
+          </div>
+        </div>
+        <div class="g-section">
+          <div class="g-section-title">à¸£à¸°à¸¢à¸°à¹à¸§à¸¥à¸²à¹à¸¥à¸°à¸à¹à¸à¸ªà¸±à¸à¸à¸±à¸</div>
+          <div class="g-card">
+            <label class="g-label">à¸ à¸²à¸à¸à¸²à¸£à¸¨à¸¶à¸à¸©à¸²</label>
+            <select class="g-select" name="semester">
+              <option value="">-- à¹à¸¥à¸·à¸­à¸ --</option>
+              <option>à¸ à¸²à¸ 1/2568</option><option>à¸ à¸²à¸ 2/2568</option>
+              <option>à¸ à¸²à¸ 1/2569</option><option>à¸ à¸²à¸ 2/2569</option>
+              <option>à¸ à¸²à¸ 1/2570</option><option>à¸ à¸²à¸ 2/2570</option>
+            </select>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸§à¸±à¸à¸à¸µà¹à¸¡à¸²à¸à¸¶à¸</label>
+            <input class="g-date" type="date" name="date_start">
+            <span style="margin:0 8px;color:var(--grey)">â</span>
+            <label class="g-label" style="display:inline;font-size:13px">à¸§à¸±à¸à¸à¸µà¹à¸à¸¥à¸±à¸</label>
+            <input class="g-date" type="date" name="date_end">
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸¡à¸«à¸²à¸§à¸´à¸à¸¢à¸²à¸¥à¸±à¸¢ / à¸ªà¸à¸²à¸à¸±à¸à¸à¹à¸à¸ªà¸±à¸à¸à¸±à¸<span class="req">*</span></label>
+            <input class="g-input" name="home_univ" placeholder="e.g. Peking University, NUS" required>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸¸à¸à¸à¸²à¸£à¸¨à¸¶à¸à¸©à¸² / à¹à¸à¸£à¹à¸à¸£à¸¡</label>
+            <input class="g-input" name="scholarship" placeholder="à¹à¸à¹à¸ ASEAN Scholarship, MSU Scholarship">
+          </div>
+          <div class="g-card">
+            <label class="g-label">MOU/MOA à¸­à¹à¸²à¸à¸­à¸´à¸</label>
+            <input class="g-input" name="mou" placeholder="à¹à¸à¹à¸ MSU-NUS-MOU-2565">
+          </div>
+        </div>
+        <div class="g-submit-row">
+          <button type="button" class="g-clear" onclick="clearForm('form-1213')">à¸¥à¹à¸²à¸à¸à¹à¸­à¸¡à¸¹à¸¥</button>
+          <button type="submit" class="g-submit">ð¾ à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥</button>
+        </div>
+      </form>
+    </div>
+    <div class="entries-panel">
+      <div class="entries-header">
+        <span class="entries-title">ð à¸£à¸²à¸¢à¸à¸²à¸£à¸à¸µà¹à¸à¸±à¸à¸à¸¶à¸à¹à¸¥à¹à¸§</span>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="entries-count" id="count-1213">0 à¸£à¸²à¸¢à¸à¸²à¸£</span>
+          <button class="btn-export" onclick="exportCSV('1213')">â¬ï¸ CSV</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table><thead><tr><th>à¸à¸·à¹à¸­</th><th>à¸ªà¸±à¸à¸à¸²à¸à¸´</th><th>à¸à¸£à¸°à¹à¸ à¸</th><th></th></tr></thead>
+        <tbody id="entries-1213"></tbody></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+     PAGE: FORM 1.2.1.4 à¸à¸´à¸ªà¸´à¸ Outbound
+ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<div id="f1214" class="page">
+  <div class="form-layout">
+    <div>
+      <div class="spec-box">
+        <strong>ð à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸ 1.2.1.4 â à¸à¸´à¸ªà¸´à¸à¹à¸à¸¢à¸­à¸­à¸à¹à¸à¸¨à¸¶à¸à¸©à¸²/à¸à¸¶à¸à¸à¸²à¸à¸à¹à¸²à¸à¸à¸£à¸°à¹à¸à¸¨ (Outbound Students)</strong>
+        à¹à¸à¹à¸²à¸«à¸¡à¸²à¸¢: <strong id="spec-1214-pct">0%</strong> (100 à¸à¸) Â· Rankings: QS IR 2.5%, THE IR 7.5%
+      </div>
+      <div class="prog-row">
+        <span class="prog-label">à¸à¸§à¸²à¸¡à¸à¹à¸²à¸§à¸«à¸à¹à¸²</span>
+        <div class="prog-bar-bg"><div class="prog-bar-fill" id="prog-1214" style="width:0%"></div></div>
+        <span class="prog-pct" id="prog-1214-txt">0/100</span>
+      </div>
+      <div class="g-header">
+        <h2>âï¸ à¸à¸±à¸à¸à¸¶à¸à¸à¸´à¸ªà¸´à¸ Outbound</h2>
+        <p>à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥à¸à¸´à¸ªà¸´à¸ à¸¡à¸¡à¸ª. à¸à¸µà¹à¸­à¸­à¸à¹à¸à¸¨à¸¶à¸à¸©à¸² à¸à¸¶à¸à¸à¸²à¸ à¸«à¸£à¸·à¸­à¹à¸¥à¸à¹à¸à¸¥à¸µà¹à¸¢à¸ à¸ à¸ªà¸à¸²à¸à¸±à¸à¸à¹à¸²à¸à¸à¸£à¸°à¹à¸à¸¨</p>
+        <div class="req-note">* à¸à¸³à¹à¸à¹à¸à¸à¹à¸­à¸à¸à¸£à¸­à¸</div>
+      </div>
+      <form id="form-1214" onsubmit="submitForm(event,'1214')">
+        <div class="g-section">
+          <div class="g-section-title">à¸à¹à¸­à¸¡à¸¹à¸¥à¸à¸´à¸ªà¸´à¸</div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸·à¹à¸­-à¸à¸²à¸¡à¸ªà¸à¸¸à¸¥<span class="req">*</span></label>
+            <input class="g-input" name="name_th" placeholder="à¸à¸·à¹à¸­ à¸à¸²à¸¡à¸ªà¸à¸¸à¸¥" required>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸£à¸«à¸±à¸ªà¸à¸´à¸ªà¸´à¸</label>
+            <input class="g-input" name="student_id" placeholder="à¹à¸à¹à¸ 65010123456">
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸à¸° / à¸ªà¸²à¸à¸²à¸§à¸´à¸à¸² (à¸à¸µà¹ à¸¡à¸¡à¸ª.)<span class="req">*</span></label>
+            <input class="g-input" name="faculty" placeholder="à¹à¸à¹à¸ à¸§à¸´à¸¨à¸§à¸à¸£à¸£à¸¡à¸¨à¸²à¸ªà¸à¸£à¹ / à¸§à¸´à¸¨à¸§à¸à¸£à¸£à¸¡à¸à¸­à¸¡à¸à¸´à¸§à¹à¸à¸­à¸£à¹" required>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸£à¸°à¸à¸±à¸à¸à¸²à¸£à¸¨à¸¶à¸à¸©à¸²</label>
+            <select class="g-select" name="degree">
+              <option value="">-- à¹à¸¥à¸·à¸­à¸ --</option>
+              <option>à¸à¸£à¸´à¸à¸à¸²à¸à¸£à¸µ</option><option>à¸à¸£à¸´à¸à¸à¸²à¹à¸</option><option>à¸à¸£à¸´à¸à¸à¸²à¹à¸­à¸</option>
+            </select>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸£à¸°à¹à¸ à¸à¸à¸´à¸à¸à¸£à¸£à¸¡<span class="req">*</span></label>
+            <select class="g-select" name="type" required>
+              <option value="">-- à¹à¸¥à¸·à¸­à¸ --</option>
+              <option>Exchange (à¹à¸¥à¸à¹à¸à¸¥à¸µà¹à¸¢à¸)</option>
+              <option>Internship (à¸à¸¶à¸à¸à¸²à¸)</option>
+              <option>Research (à¸§à¸´à¸à¸±à¸¢)</option>
+              <option>Summer School</option>
+              <option>Conference (à¸à¸£à¸°à¸à¸¸à¸¡)</option>
+              <option>Study Tour</option>
+            </select>
+          </div>
+        </div>
+        <div class="g-section">
+          <div class="g-section-title">à¸ªà¸à¸²à¸à¸±à¸à¸à¸¥à¸²à¸¢à¸à¸²à¸à¹à¸¥à¸°à¸£à¸°à¸¢à¸°à¹à¸§à¸¥à¸²</div>
+          <div class="g-card">
+            <label class="g-label">à¸ªà¸à¸²à¸à¸±à¸à¸à¸¥à¸²à¸¢à¸à¸²à¸<span class="req">*</span></label>
+            <input class="g-input" name="dest_univ" placeholder="e.g. Kyoto University, MIT" required>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸£à¸°à¹à¸à¸¨à¸à¸¥à¸²à¸¢à¸à¸²à¸<span class="req">*</span></label>
+            <input class="g-input" name="country" placeholder="à¹à¸à¹à¸ Japan, USA, Germany" required>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸£à¸°à¸¢à¸°à¹à¸§à¸¥à¸²</label>
+            à¸§à¸±à¸à¹à¸£à¸´à¹à¸¡ <input class="g-date" type="date" name="date_start">
+            &nbsp; à¸§à¸±à¸à¸ªà¸´à¹à¸à¸ªà¸¸à¸ <input class="g-date" type="date" name="date_end">
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¹à¸«à¸¥à¹à¸à¸à¸¸à¸ / à¹à¸à¸£à¹à¸à¸£à¸¡</label>
+            <input class="g-input" name="scholarship" placeholder="à¹à¸à¹à¸ JASSO, Fulbright, à¸à¸¸à¸ à¸¡à¸¡à¸ª.">
+          </div>
+          <div class="g-card">
+            <label class="g-label">MOU/MOA à¸­à¹à¸²à¸à¸­à¸´à¸</label>
+            <input class="g-input" name="mou" placeholder="à¹à¸à¹à¸ MSU-Kyoto-MOU-2564">
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸¥à¸¥à¸±à¸à¸à¹ / à¸à¸£à¸°à¹à¸¢à¸à¸à¹à¸à¸µà¹à¹à¸à¹à¸£à¸±à¸</label>
+            <textarea class="g-textarea" name="outcome" placeholder="à¸ªà¸£à¸¸à¸à¸ªà¸±à¹à¸à¹..."></textarea>
+          </div>
+        </div>
+        <div class="g-submit-row">
+          <button type="button" class="g-clear" onclick="clearForm('form-1214')">à¸¥à¹à¸²à¸à¸à¹à¸­à¸¡à¸¹à¸¥</button>
+          <button type="submit" class="g-submit">ð¾ à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥</button>
+        </div>
+      </form>
+    </div>
+    <div class="entries-panel">
+      <div class="entries-header">
+        <span class="entries-title">ð à¸£à¸²à¸¢à¸à¸²à¸£à¸à¸µà¹à¸à¸±à¸à¸à¸¶à¸à¹à¸¥à¹à¸§</span>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="entries-count" id="count-1214">0 à¸£à¸²à¸¢à¸à¸²à¸£</span>
+          <button class="btn-export" onclick="exportCSV('1214')">â¬ï¸ CSV</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table><thead><tr><th>à¸à¸·à¹à¸­</th><th>à¸à¸£à¸°à¹à¸à¸¨</th><th>à¸à¸£à¸°à¹à¸ à¸</th><th></th></tr></thead>
+        <tbody id="entries-1214"></tbody></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+     PAGE: FORM 1.2.1.22 MOU/MOA Output
+ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<div id="f12122" class="page">
+  <div class="form-layout">
+    <div>
+      <div class="spec-box">
+        <strong>ð à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸ 1.2.1.22 â MOU/MOA à¸à¸µà¹à¸¡à¸µà¸à¸¥à¸à¸à¸´à¸à¸±à¸à¸´à¸à¸£à¸´à¸ (Active Output)</strong>
+        à¹à¸à¹à¸²à¸«à¸¡à¸²à¸¢: <strong id="spec-12122-pct">0%</strong> (50 à¸à¸à¸±à¸) Â· Rankings: QS Sustainability, THE University Impact
+      </div>
+      <div class="prog-row">
+        <span class="prog-label">à¸à¸§à¸²à¸¡à¸à¹à¸²à¸§à¸«à¸à¹à¸²</span>
+        <div class="prog-bar-bg"><div class="prog-bar-fill" id="prog-12122" style="width:0%"></div></div>
+        <span class="prog-pct" id="prog-12122-txt">0/50</span>
+      </div>
+      <div class="g-header">
+        <h2>ð¤ à¸à¸±à¸à¸à¸¶à¸ MOU/MOA Output</h2>
+        <p>à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥ MOU à¹à¸¥à¸° MOA à¸à¸µà¹à¸¡à¸µà¸à¸´à¸à¸à¸£à¸£à¸¡à¸à¸§à¸²à¸¡à¸£à¹à¸§à¸¡à¸¡à¸·à¸­à¸à¸£à¸´à¸à¸à¸±à¸à¸ªà¸à¸²à¸à¸±à¸à¸à¹à¸²à¸à¸à¸£à¸°à¹à¸à¸¨</p>
+        <div class="req-note">* à¸à¸³à¹à¸à¹à¸à¸à¹à¸­à¸à¸à¸£à¸­à¸</div>
+      </div>
+      <form id="form-12122" onsubmit="submitForm(event,'12122')">
+        <div class="g-section">
+          <div class="g-section-title">à¸à¹à¸­à¸¡à¸¹à¸¥ MOU/MOA</div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸·à¹à¸­ MOU/MOA (à¸ à¸²à¸©à¸²à¹à¸à¸¢)<span class="req">*</span></label>
+            <input class="g-input" name="name_th" placeholder="à¹à¸à¹à¸ à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸à¸à¸¥à¸à¸à¸§à¸²à¸¡à¸£à¹à¸§à¸¡à¸¡à¸·à¸­à¸à¸²à¸à¸§à¸´à¸à¸²à¸à¸²à¸£" required>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸·à¹à¸­ MOU/MOA (à¸ à¸²à¸©à¸²à¸­à¸±à¸à¸à¸¤à¸©)</label>
+            <input class="g-input" name="name_en" placeholder="e.g. Memorandum of Understanding on Academic Cooperation">
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸£à¸°à¹à¸ à¸<span class="req">*</span></label>
+            <div class="g-radio-group">
+              <div class="g-radio"><input type="radio" name="type" value="MOU" required><label>MOU (Memorandum of Understanding)</label></div>
+              <div class="g-radio"><input type="radio" name="type" value="MOA"><label>MOA (Memorandum of Agreement)</label></div>
+              <div class="g-radio"><input type="radio" name="type" value="Letter of Intent"><label>Letter of Intent</label></div>
+              <div class="g-radio"><input type="radio" name="type" value="Agreement"><label>Agreement à¸­à¸·à¹à¸à¹</label></div>
+            </div>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸¡à¸«à¸²à¸§à¸´à¸à¸¢à¸²à¸¥à¸±à¸¢ / à¸­à¸à¸à¹à¸à¸£à¸à¸¹à¹à¸ à¸²à¸à¸µ<span class="req">*</span></label>
+            <input class="g-input" name="partner" placeholder="e.g. National University of Singapore" required>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸£à¸°à¹à¸à¸¨à¸à¸­à¸à¸ à¸²à¸à¸µ<span class="req">*</span></label>
+            <input class="g-input" name="country" placeholder="à¹à¸à¹à¸ Singapore, Japan, USA" required>
+          </div>
+        </div>
+        <div class="g-section">
+          <div class="g-section-title">à¸ªà¸à¸²à¸à¸°à¹à¸¥à¸°à¸à¸´à¸à¸à¸£à¸£à¸¡</div>
+          <div class="g-card">
+            <label class="g-label">à¸§à¸±à¸à¸à¸µà¹à¸¥à¸à¸à¸²à¸¡</label>
+            <input class="g-date" type="date" name="sign_date">
+            <span style="margin:0 8px;color:var(--grey)">à¸§à¸±à¸à¸«à¸¡à¸à¸­à¸²à¸¢à¸¸</span>
+            <input class="g-date" type="date" name="expire_date">
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸ªà¸à¸²à¸à¸°<span class="req">*</span></label>
+            <select class="g-select" name="status" required>
+              <option value="">-- à¹à¸¥à¸·à¸­à¸ --</option>
+              <option>Active (à¸¡à¸µà¸à¸¥à¸à¸±à¸à¸à¸±à¸)</option>
+              <option>Renewed (à¸à¹à¸­à¸­à¸²à¸¢à¸¸à¹à¸¥à¹à¸§)</option>
+              <option>Pending Renewal (à¸£à¸­à¸à¹à¸­à¸­à¸²à¸¢à¸¸)</option>
+              <option>Expired (à¸«à¸¡à¸à¸­à¸²à¸¢à¸¸)</option>
+            </select>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸´à¸à¸à¸£à¸£à¸¡à¸à¸µà¹à¹à¸à¸´à¸à¸à¸¶à¹à¸à¸à¸£à¸´à¸<span class="req">*</span></label>
+            <textarea class="g-textarea" name="activities" placeholder="à¸£à¸°à¸à¸¸à¸à¸´à¸à¸à¸£à¸£à¸¡à¸à¸µà¹à¹à¸à¸´à¸à¸à¸¶à¹à¸à¸à¸£à¸´à¸à¹à¸à¸à¸µà¸à¸à¸à¸£à¸°à¸¡à¸²à¸ 2570 (à¸­à¸¢à¹à¸²à¸à¸à¹à¸­à¸¢ 1 à¸à¸´à¸à¸à¸£à¸£à¸¡)..." required></textarea>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸³à¸à¸§à¸à¸à¸¹à¹à¹à¸à¹à¸£à¸±à¸à¸à¸£à¸°à¹à¸¢à¸à¸à¹ (à¸à¸´à¸ªà¸´à¸/à¸­à¸²à¸à¸²à¸£à¸¢à¹)</label>
+            <input class="g-number" type="number" name="beneficiaries" placeholder="0" min="0">
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸à¸° / à¸«à¸à¹à¸§à¸¢à¸à¸²à¸à¸à¸µà¹à¸£à¸±à¸à¸à¸´à¸à¸à¸­à¸</label>
+            <input class="g-input" name="faculty" placeholder="à¹à¸à¹à¸ à¸à¸à¸°à¸§à¸´à¸à¸¢à¸²à¸¨à¸²à¸ªà¸à¸£à¹, OIA">
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸«à¸¥à¸±à¸à¸à¸²à¸ (URL)</label>
+            <input class="g-input" name="evidence_url" placeholder="https://...">
+          </div>
+        </div>
+        <div class="g-submit-row">
+          <button type="button" class="g-clear" onclick="clearForm('form-12122')">à¸¥à¹à¸²à¸à¸à¹à¸­à¸¡à¸¹à¸¥</button>
+          <button type="submit" class="g-submit">ð¾ à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥</button>
+        </div>
+      </form>
+    </div>
+    <div class="entries-panel">
+      <div class="entries-header">
+        <span class="entries-title">ð à¸£à¸²à¸¢à¸à¸²à¸£à¸à¸µà¹à¸à¸±à¸à¸à¸¶à¸à¹à¸¥à¹à¸§</span>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="entries-count" id="count-12122">0 à¸£à¸²à¸¢à¸à¸²à¸£</span>
+          <button class="btn-export" onclick="exportCSV('12122')">â¬ï¸ CSV</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table><thead><tr><th>à¸à¸·à¹à¸­ MOU/MOA</th><th>à¸ à¸²à¸à¸µ</th><th>à¸ªà¸à¸²à¸à¸°</th><th></th></tr></thead>
+        <tbody id="entries-12122"></tbody></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+     PAGE: FORM 1.2.1.23 à¸­à¸²à¸à¸²à¸£à¸¢à¹à¸à¹à¸²à¸à¸à¸²à¸à¸´
+ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<div id="f12123" class="page">
+  <div class="form-layout">
+    <div>
+      <div class="spec-box">
+        <strong>ð à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸ 1.2.1.23 â à¸­à¸²à¸à¸²à¸£à¸¢à¹à¸à¸²à¸§à¸à¹à¸²à¸à¸à¸²à¸à¸´ (Part-time / Visiting)</strong>
+        à¹à¸à¹à¸²à¸«à¸¡à¸²à¸¢: <strong id="spec-12123-pct">0%</strong> (30 à¸à¸) Â· Rankings: QS IFR 5%, THE IFR 4.5%
+      </div>
+      <div class="prog-row">
+        <span class="prog-label">à¸à¸§à¸²à¸¡à¸à¹à¸²à¸§à¸«à¸à¹à¸²</span>
+        <div class="prog-bar-bg"><div class="prog-bar-fill" id="prog-12123" style="width:0%"></div></div>
+        <span class="prog-pct" id="prog-12123-txt">0/30</span>
+      </div>
+      <div class="g-header">
+        <h2>ð¨âð« à¸à¸±à¸à¸à¸¶à¸à¸­à¸²à¸à¸²à¸£à¸¢à¹à¸à¹à¸²à¸à¸à¸²à¸à¸´</h2>
+        <p>à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥à¸­à¸²à¸à¸²à¸£à¸¢à¹à¸à¸²à¸§à¸à¹à¸²à¸à¸à¸²à¸à¸´à¸à¸µà¹à¸ªà¸­à¸à¹à¸à¸¡à¸«à¸²à¸§à¸´à¸à¸¢à¸²à¸¥à¸±à¸¢à¸¡à¸«à¸²à¸ªà¸²à¸£à¸à¸²à¸¡ à¸à¸±à¹à¸ Part-time à¹à¸¥à¸° Visiting</p>
+        <div class="req-note">* à¸à¸³à¹à¸à¹à¸à¸à¹à¸­à¸à¸à¸£à¸­à¸</div>
+      </div>
+      <form id="form-12123" onsubmit="submitForm(event,'12123')">
+        <div class="g-section">
+          <div class="g-section-title">à¸à¹à¸­à¸¡à¸¹à¸¥à¸ªà¹à¸§à¸à¸à¸±à¸§</div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸·à¹à¸­-à¸à¸²à¸¡à¸ªà¸à¸¸à¸¥ (à¸ à¸²à¸©à¸²à¸­à¸±à¸à¸à¸¤à¸©)<span class="req">*</span></label>
+            <input class="g-input" name="name_en" placeholder="e.g. Prof. John Smith" required>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸ªà¸±à¸à¸à¸²à¸à¸´ / à¸à¸£à¸°à¹à¸à¸¨<span class="req">*</span></label>
+            <input class="g-input" name="country" placeholder="à¹à¸à¹à¸ American, Japanese, Chinese" required>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸£à¸°à¹à¸ à¸<span class="req">*</span></label>
+            <div class="g-radio-group">
+              <div class="g-radio"><input type="radio" name="type" value="Part-time" required><label>Part-time Lecturer</label></div>
+              <div class="g-radio"><input type="radio" name="type" value="Visiting Professor"><label>Visiting Professor</label></div>
+              <div class="g-radio"><input type="radio" name="type" value="Exchange Faculty"><label>Exchange Faculty</label></div>
+              <div class="g-radio"><input type="radio" name="type" value="Adjunct"><label>Adjunct / Special Lecturer</label></div>
+            </div>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸à¸° / à¸ à¸²à¸à¸§à¸´à¸à¸² (à¹à¸ à¸¡à¸¡à¸ª.)<span class="req">*</span></label>
+            <input class="g-input" name="faculty" placeholder="à¹à¸à¹à¸ à¸§à¸´à¸à¸¢à¸²à¸¨à¸²à¸ªà¸à¸£à¹ / à¸à¸´à¸ªà¸´à¸à¸ªà¹" required>
+          </div>
+        </div>
+        <div class="g-section">
+          <div class="g-section-title">à¸à¸²à¸£à¸ªà¸­à¸à¹à¸¥à¸°à¸ªà¸±à¸à¸à¸±à¸</div>
+          <div class="g-card">
+            <label class="g-label">à¸£à¸²à¸¢à¸§à¸´à¸à¸²à¸à¸µà¹à¸ªà¸­à¸<span class="req">*</span></label>
+            <input class="g-input" name="course" placeholder="à¹à¸à¹à¸ SC101 Introduction to Physics" required>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸ à¸²à¸©à¸²à¸à¸µà¹à¹à¸à¹à¸ªà¸­à¸</label>
+            <div class="g-radio-group">
+              <div class="g-radio"><input type="radio" name="lang" value="English"><label>English</label></div>
+              <div class="g-radio"><input type="radio" name="lang" value="Thai"><label>Thai</label></div>
+              <div class="g-radio"><input type="radio" name="lang" value="Other"><label>à¸­à¸·à¹à¸à¹</label></div>
+            </div>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸£à¸°à¸¢à¸°à¹à¸§à¸¥à¸²</label>
+            à¸§à¸±à¸à¹à¸£à¸´à¹à¸¡ <input class="g-date" type="date" name="date_start">
+            &nbsp; à¸§à¸±à¸à¸ªà¸´à¹à¸à¸ªà¸¸à¸ <input class="g-date" type="date" name="date_end">
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸à¸³à¸à¸§à¸à¸à¸±à¹à¸§à¹à¸¡à¸à¸ªà¸­à¸/à¸ªà¸±à¸à¸à¸²à¸«à¹</label>
+            <input class="g-number" type="number" name="hours_per_week" placeholder="0" min="0" max="40">
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¸¡à¸«à¸²à¸§à¸´à¸à¸¢à¸²à¸¥à¸±à¸¢ / à¸ªà¸à¸²à¸à¸±à¸à¸à¹à¸à¸ªà¸±à¸à¸à¸±à¸<span class="req">*</span></label>
+            <input class="g-input" name="home_univ" placeholder="e.g. University of Tokyo" required>
+          </div>
+          <div class="g-card">
+            <label class="g-label">à¹à¸«à¸¥à¹à¸à¸à¸¸à¸ / à¹à¸à¸£à¹à¸à¸£à¸¡</label>
+            <input class="g-input" name="fund" placeholder="à¹à¸à¹à¸ Erasmus+, JSPS, à¸à¸¸à¸à¸ªà¹à¸§à¸à¸à¸±à¸§">
+          </div>
+          <div class="g-card">
+            <label class="g-label">MOU/MOA à¸­à¹à¸²à¸à¸­à¸´à¸</label>
+            <input class="g-input" name="mou" placeholder="à¹à¸à¹à¸ MSU-Tokyo-MOU-2566">
+          </div>
+        </div>
+        <div class="g-submit-row">
+          <button type="button" class="g-clear" onclick="clearForm('form-12123')">à¸¥à¹à¸²à¸à¸à¹à¸­à¸¡à¸¹à¸¥</button>
+          <button type="submit" class="g-submit">ð¾ à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥</button>
+        </div>
+      </form>
+    </div>
+    <div class="entries-panel">
+      <div class="entries-header">
+        <span class="entries-title">ð à¸£à¸²à¸¢à¸à¸²à¸£à¸à¸µà¹à¸à¸±à¸à¸à¸¶à¸à¹à¸¥à¹à¸§</span>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="entries-count" id="count-12123">0 à¸£à¸²à¸¢à¸à¸²à¸£</span>
+          <button class="btn-export" onclick="exportCSV('12123')">â¬ï¸ CSV</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table><thead><tr><th>à¸à¸·à¹à¸­</th><th>à¸ªà¸±à¸à¸à¸²à¸à¸´</th><th>à¸à¸£à¸°à¹à¸ à¸</th><th></th></tr></thead>
+        <tbody id="entries-12123"></tbody></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+     JAVASCRIPT
+ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<script>
+'use strict';
+
+// ââ KPI Config âââââââââââââââââââââââââââââââââââââââââââââ
+const KPI = {
+  '116':   { icon:'ð', label:'1.1.6 à¸¨à¸´à¸©à¸¢à¹à¹à¸à¹à¸²à¸à¸¹à¹à¸à¸£à¸´à¸«à¸²à¸£', target:400, color:'#7B1C2E',
+             summary: e => e.name_th||e.name_en, sub: e => (e.position||'')+(e.org?', '+e.org:''), extra: e => e.country||'' },
+  '1213':  { icon:'ð', label:'1.2.1.3 à¸à¸´à¸ªà¸´à¸ Inbound', target:100, color:'#1A73E8',
+             summary: e => e.name_en, sub: e => e.type||'', extra: e => e.country||'' },
+  '1214':  { icon:'âï¸', label:'1.2.1.4 à¸à¸´à¸ªà¸´à¸ Outbound', target:100, color:'#E37400',
+             summary: e => e.name_th, sub: e => e.type||'', extra: e => e.country||'' },
+  '12122': { icon:'ð¤', label:'1.2.1.22 MOU/MOA', target:50, color:'#1E8E3E',
+             summary: e => e.name_th, sub: e => e.partner||'', extra: e => e.status||'' },
+  '12123': { icon:'ð¨âð«', label:'1.2.1.23 à¸­à¸²à¸à¸²à¸£à¸¢à¹à¸à¹à¸²à¸à¸à¸²à¸à¸´', target:30, color:'#9334E6',
+             summary: e => e.name_en, sub: e => e.type||'', extra: e => e.country||'' },
+};
+const KPI_IDS = Object.keys(KPI);
+
+// ââ Data Store (localStorage) ââââââââââââââââââââââââââââââ
+function loadData(id) {
+  try { return JSON.parse(localStorage.getItem('oia_kpi_'+id)||'[]'); } catch { return []; }
+}
+function saveData(id, arr) {
+  localStorage.setItem('oia_kpi_'+id, JSON.stringify(arr));
+}
+function getAllData() {
+  const all = [];
+  KPI_IDS.forEach(id => { loadData(id).forEach(e => all.push({kpiId:id, ...e})); });
+  all.sort((a,b) => new Date(b._ts||0) - new Date(a._ts||0));
+  return all;
+}
+
+// ââ Page Navigation ââââââââââââââââââââââââââââââââââââââââ
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const tabs = document.querySelectorAll('.nav-tab');
+  const idx = ['dashboard','f116','f1213','f1214','f12122','f12123'].indexOf(id);
+  if(idx>=0) tabs[idx].classList.add('active');
+  if(id==='dashboard') refreshDashboard();
+}
+
+// ââ Form Submit ââââââââââââââââââââââââââââââââââââââââââââ
+function submitForm(event, kpiId) {
+  event.preventDefault();
+  const form = event.target;
+  const data = {};
+  const fd = new FormData(form);
+  fd.forEach((v,k) => { if(v) data[k]=v; });
+  data._ts = new Date().toISOString();
+  data._id = Date.now();
+  const arr = loadData(kpiId);
+  arr.push(data);
+  saveData(kpiId, arr);
+  form.reset();
+  showToast('à¸à¸±à¸à¸à¸¶à¸à¸à¹à¸­à¸¡à¸¹à¸¥à¸ªà¸³à¹à¸£à¹à¸! (à¸£à¸²à¸¢à¸à¸²à¸£à¸à¸µà¹ '+ arr.length +')');
+  refreshAll();
+}
+
+function clearForm(formId) {
+  document.getElementById(formId).reset();
+}
+
+function deleteEntry(kpiId, entryId) {
+  const arr = loadData(kpiId).filter(e => e._id !== entryId);
+  saveData(kpiId, arr);
+  showToast('à¸¥à¸à¸£à¸²à¸¢à¸à¸²à¸£à¹à¸£à¸µà¸¢à¸à¸£à¹à¸­à¸¢', 'orange');
+  refreshAll();
+}
+
+// ââ Toast ââââââââââââââââââââââââââââââââââââââââââââââââââ
+let toastTimer;
+function showToast(msg, type='green') {
+  const t = document.getElementById('toast');
+  t.textContent = (type==='green'?'â ':'ðï¸ ') + msg;
+  t.style.background = type==='orange' ? 'var(--orange)' : 'var(--green)';
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ââ Refresh All ââââââââââââââââââââââââââââââââââââââââââââ
+function refreshAll() {
+  KPI_IDS.forEach(id => {
+    const arr = loadData(id);
+    const cfg = KPI[id];
+    const pct = Math.min(100, Math.round(arr.length / cfg.target * 100));
+
+    // Nav badge
+    const badge = document.getElementById('badge-'+id);
+    if(badge) {
+      badge.textContent = arr.length;
+      badge.className = 'nav-badge ' + (pct>=100?'green': pct>=50?'':'orange');
+    }
+
+    // Progress bar (in form page)
+    const bar = document.getElementById('prog-'+id);
+    const txt = document.getElementById('prog-'+id+'-txt');
+    const spec = document.getElementById('spec-'+id+'-pct');
+    if(bar) bar.style.width = pct+'%';
+    if(txt) txt.textContent = arr.length+'/'+cfg.target;
+    if(spec) spec.textContent = pct+'%';
+
+    // Entry count
+    const cnt = document.getElementById('count-'+id);
+    if(cnt) cnt.textContent = arr.length+' à¸£à¸²à¸¢à¸à¸²à¸£';
+
+    // Entries table
+    refreshEntriesTable(id, arr);
+  });
+  refreshDashboard();
+}
+
+function refreshEntriesTable(id, arr) {
+  const tbody = document.getElementById('entries-'+id);
+  if(!tbody) return;
+  if(arr.length===0) {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--grey);padding:20px">à¸¢à¸±à¸à¹à¸¡à¹à¸¡à¸µà¸à¹à¸­à¸¡à¸¹à¸¥ â à¸à¸£à¸­à¸à¹à¸à¸à¸à¸­à¸£à¹à¸¡à¸à¹à¸²à¸à¸à¹à¸²à¸¢à¹à¸à¸·à¹à¸­à¹à¸£à¸´à¹à¸¡à¸à¹à¸</td></tr>';
+    return;
+  }
+  const cfg = KPI[id];
+  tbody.innerHTML = [...arr].reverse().map(e => `
+    <tr>
+      <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${cfg.summary(e)}|'-'}</td>
+      <td><span class="badge badge-blue">${cfg.extra(e)||'-'}</span></td>
+      <td style="font-size:11px;color:var(--grey)">${cfg.sub(e)||'-'}</td>
+      <td><button class="btn-delete" onclick="deleteEntry('${id}',${e._id})" title="à¸¥à¸">ðï¸</button></td>
+    </tr>`).join('');
+}
+
+// ââ Dashboard ââââââââââââââââââââââââââââââââââââââââââââââ
+let mainChart = null;
+
+function refreshDashboard() {
+  // KPI Cards
+  const grid = document.getElementById('kpi-grid');
+  const statusList = document.getElementById('status-list');
+  if(!grid) return;
+
+  grid.innerHTML = '';
+  statusList.innerHTML = '';
+
+  KPI_IDS.forEach(id => {
+    const arr = loadData(id);
+    const cfg = KPI[id];
+    const pct = Math.min(100, Math.round(arr.length / cfg.target * 100));
+    const statusColor = pct>=100?'var(--green)': pct>=70?'var(--blue)': pct>=40?'var(--orange)':'var(--red)';
+
+    // Card
+    grid.innerHTML += `
+      <div class="kpi-card" onclick="showPage('f${id}')">
+        <div class="kpi-card-top">
+          <span class="kpi-icon">${cfg.icon}</span>
+          <span class="kpi-status-dot" style="background:${statusColor}"></span>
+        </div>
+        <div class="kpi-number">${arr.length}<span>/${cfg.target}</span></div>
+        <div class="kpi-label">${cfg.label}</div>
+        <div class="kpi-prog-bar"><div class="kpi-prog-fill" style="width:${pct}%;background:${statusColor}"></div></div>
+        <div class="kpi-meta">
+          <span class="kpi-pct" style="color:${statusColor}">${pct}%</span>
+          <span>à¹à¸à¹à¸² ${cfg.target} à¸£à¸²à¸¢à¸à¸²à¸£</span>
+        </div>
+      </div>`;
+
+    // Status item
+    statusList.innerHTML += `
+      <div class="status-item">
+        <span class="status-item-icon">${cfg.icon}</span>
+        <div class="status-item-info">
+          <div class="status-item-name">${cfg.label}</div>
+          <div class="status-item-sub">${arr.length} / ${cfg.target} à¸£à¸²à¸¢à¸à¸²à¸£</div>
+        </div>
+        <div class="status-item-right">
+          <div class="status-item-pct" style="color:${statusColor}">${pct}%</div>
+        </div>
+      </div>`;
+  });
+
+  // Main chart
+  const counts = KPI_IDS.map(id => loadData(id).length);
+  const targets = KPI_IDS.map(id => KPI[id].target);
+  const labels = KPI_IDS.map(id => KPI[id].label.split(' ').slice(0,2).join(' '));
+  const colors = KPI_IDS.map(id => KPI[id].color);
+
+  if(mainChart) mainChart.destroy();
+  const ctx = document.getElementById('mainChart');
+  if(ctx) {
+    mainChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [
+          { label: 'à¸à¸³à¸à¸§à¸à¸à¸£à¸´à¸', data: counts, backgroundColor: colors.map(c=>c+'CC'), borderColor: colors, borderWidth: 2, borderRadius: 4 },
+          { label: 'à¹à¸à¹à¸²à¸«à¸¡à¸²à¸¢', data: targets, backgroundColor: 'transparent', borderColor: '#CCCCCC', borderWidth: 2, borderDash: [5,5], type: 'line', pointStyle: 'dash', tension: 0 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { font: { size: 11 }, boxWidth: 14, padding: 12 } } },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 10 }, maxRotation: 15 } },
+          y: { beginAtZero: true, grid: { color: '#F0F0F0' }, ticks: { font: { size: 11 } } }
+        }
+      }
+    });
+  }
+
+  // Recent table
+  const tbody = document.getElementById('recent-body');
+  if(tbody) {
+    const all = getAllData().slice(0, 15);
+    if(all.length===0) {
+      tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><div class="empty-icon">ð­</div><p>à¸¢à¸±à¸à¹à¸¡à¹à¸¡à¸µà¸à¹à¸­à¸¡à¸¹à¸¥ â à¹à¸à¸à¸£à¸­à¸à¹à¸à¸à¸à¸­à¸£à¹à¸¡à¸à¸±à¸§à¸à¸µà¹à¸§à¸±à¸à¹à¸à¹à¹à¸¥à¸¢!</p></div></td></tr>';
+    } else {
+      tbody.innerHTML = all.map(e => {
+        const cfg = KPI[e.kpiId];
+        const d = new Date(e._ts);
+        const dateStr = `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()+543} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
+        return `<tr>
+          <td><span class="badge badge-maroon">${cfg.icon} ${cfg.label.split(' ').slice(0,2).join(' ')}</span></td>
+          <td>${cfg.summary(e)||'-'}</td>
+          <td style="font-size:12px;color:var(--grey)">${cfg.sub(e)||''} ${cfg.extra(e)?'Â· '+cfg.extra(e):''}</td>
+          <td style="font-size:11px;color:var(--grey);white-space:nowrap">${dateStr}</td>
+        </tr>`;
+      }).join('');
+    }
+  }
+}
+
+// ââ CSV Export âââââââââââââââââââââââââââââââââââââââââââââ
+function exportCSV(id) {
+  const arr = loadData(id);
+  if(arr.length===0){ alert('à¹à¸¡à¹à¸¡à¸µà¸à¹à¸­à¸¡à¸¹à¸¥à¸ªà¸³à¸«à¸£à¸±à¸ Export'); return; }
+  const keys = [...new Set(arr.flatMap(e => Object.keys(e)))].filter(k => !k.startsWith('_'));
+  const rows = [keys, ...arr.map(e => keys.map(k => (e[k]||'').toString().replace(/,/g,'/')))];
+  const csv = '\uFEFF' + rows.map(r => r.join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `OIA_KPI_${id}_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+
+function exportAllCSV() {
+  const all = getAllData();
+  if(all.length===0){ alert('à¹à¸¡à¹à¸¡à¸µà¸à¹à¸­à¸¡à¸¹à¸¥à¸ªà¸³à¸«à¸£à¸±à¸ Export'); return; }
+  const keys = ['kpiId', ...new Set(all.flatMap(e => Object.keys(e).filter(k=>!k.startsWith('_'))))];
+  const rows = [keys, ...all.map(e => keys.map(k => (e[k]||'').toString().replace(/,/g,'/')))];
+  const csv = '\uFEFF' + rows.map(r => r.join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `OIA_Dashboard_All_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+
+// ââ Init âââââââââââââââââââââââââââââââââââââââââââââââââââ
+refreshAll();
+</script>
+</body>
+</html>
