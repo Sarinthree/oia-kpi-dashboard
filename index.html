@@ -175,6 +175,40 @@ tr:hover td{background:#FAF8F8}
   .page{padding:14px 12px}
   .nav-tab{padding:11px 14px;font-size:11.5px}
 }
+
+/* ══════════════════════ GOOGLE SHEETS SYNC UI ══════════════════════ */
+.btn-settings{background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.4);padding:6px 12px;border-radius:20px;font-size:12px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:5px}
+.btn-settings:hover{background:rgba(255,255,255,.25)}
+.sync-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:3px 9px;border-radius:10px;font-weight:600;cursor:pointer}
+.sync-badge.ok{background:var(--green-light);color:var(--green)}
+.sync-badge.err{background:var(--red-light);color:var(--red)}
+.sync-badge.syncing{background:var(--blue-light);color:var(--blue)}
+.sync-badge.off{background:var(--grey-light);color:var(--grey)}
+.btn-sync{background:none;border:1.5px solid var(--gold);color:var(--gold);padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:5px}
+.btn-sync:hover{background:var(--gold);color:#fff}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{display:inline-block;animation:spin .8s linear infinite}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:none;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:12px;padding:28px 32px;width:100%;max-width:480px;box-shadow:0 8px 40px rgba(0,0,0,.25)}
+.modal-title{font-size:16px;font-weight:700;color:var(--maroon);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.modal-sub{font-size:12px;color:var(--grey);margin-bottom:20px;line-height:1.5}
+.modal-field{margin-bottom:16px}
+.modal-label{font-size:13px;font-weight:600;color:#333;display:block;margin-bottom:6px}
+.modal-input{width:100%;border:1.5px solid var(--grey-border);border-radius:6px;padding:9px 12px;font-size:13px;outline:none;font-family:inherit;transition:.2s}
+.modal-input:focus{border-color:var(--blue)}
+.modal-hint{font-size:11px;color:var(--grey);margin-top:4px;line-height:1.5}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;padding-top:16px;border-top:1px solid #F0F0F0}
+.modal-btn-save{background:var(--maroon);color:#fff;border:none;padding:9px 22px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.modal-btn-save:hover{background:var(--maroon-dark)}
+.modal-btn-cancel{background:none;border:1.5px solid var(--grey-border);color:var(--grey);padding:9px 16px;border-radius:6px;font-size:13px;cursor:pointer;font-family:inherit}
+.modal-btn-cancel:hover{background:var(--grey-light)}
+.modal-btn-test{background:var(--blue-light);border:none;color:var(--blue);padding:9px 16px;border-radius:6px;font-size:13px;cursor:pointer;font-family:inherit;font-weight:600}
+.modal-btn-test:hover{background:var(--blue);color:#fff}
+.sheet-info{background:var(--grey-light);border-radius:6px;padding:10px 12px;font-size:11px;color:#444;line-height:1.7;margin-bottom:16px}
+.sheet-info a{color:var(--blue)}
 </style>
 </head>
 <body>
@@ -189,7 +223,10 @@ tr:hover td{background:#FAF8F8}
     </div>
   </div>
   <div class="header-right">
+    <span id="sync-badge" class="sync-badge off" onclick="openSettings()" title="คลิกเพื่อตั้งค่า Google Sheets">⚙️ ยังไม่ได้เชื่อมต่อ</span>
+    <button class="btn-sync" id="btn-sync" onclick="syncAllFromSheets()" title="ดึงข้อมูลล่าสุดจาก Google Sheets" style="display:none">🔄 Sync</button>
     <button class="btn-export-all" onclick="exportAllCSV()">⬇️ Export ทั้งหมด</button>
+    <button class="btn-settings" onclick="openSettings()">⚙️ ตั้งค่า Sheets</button>
   </div>
 </div>
 <div class="gold-bar"></div>
@@ -206,6 +243,37 @@ tr:hover td{background:#FAF8F8}
 
 <!-- TOAST -->
 <div class="toast" id="toast">✅ บันทึกข้อมูลสำเร็จ</div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal-overlay" id="settings-modal">
+  <div class="modal-box">
+    <div class="modal-title">⚙️ ตั้งค่า Google Sheets Sync</div>
+    <div class="modal-sub">เชื่อมต่อระบบกับ Google Sheets เพื่อให้ทุก User บันทึกข้อมูลไปยังที่เดียวกัน</div>
+    <div class="sheet-info">
+      <strong>📋 วิธีตั้งค่า (ทำครั้งเดียว):</strong><br>
+      1. เปิด <a href="https://script.google.com/home/projects/create" target="_blank">Google Apps Script</a> → สร้างโปรเจกต์ใหม่<br>
+      2. วางโค้ด Apps Script (ดูจากไฟล์ <strong>OIA_AppScript.gs</strong> ที่แนบมา)<br>
+      3. คลิก <strong>Deploy → New deployment → Web app</strong><br>
+      4. ตั้ง Execute as: <em>Me</em> · Who has access: <em>Anyone</em><br>
+      5. คัดลอก <strong>Web App URL</strong> มาวางด้านล่าง
+    </div>
+    <div class="modal-field">
+      <label class="modal-label">Web App URL (Google Apps Script)</label>
+      <input class="modal-input" id="cfg-url" placeholder="https://script.google.com/macros/s/.../exec">
+      <div class="modal-hint">⚠️ URL ต้องเป็นแบบ Deploy → Web app เท่านั้น</div>
+    </div>
+    <div class="modal-field">
+      <label class="modal-label">ชื่อผู้กรอก (แสดงใน Google Sheets)</label>
+      <input class="modal-input" id="cfg-user" placeholder="เช่น นายสมชาย / admin@msu.ac.th">
+      <div class="modal-hint">ใช้ระบุว่าใครเป็นคนกรอกข้อมูล เมื่อมีหลาย User</div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn-cancel" onclick="closeSettings()">ยกเลิก</button>
+      <button class="modal-btn-test" onclick="testConnection()">🔌 ทดสอบการเชื่อมต่อ</button>
+      <button class="modal-btn-save" onclick="saveSettings()">💾 บันทึกการตั้งค่า</button>
+    </div>
+  </div>
+</div>
 
 <!-- ════════════════════════════════════════════════════════════
      PAGE: DASHBOARD
@@ -811,6 +879,126 @@ function getAllData() {
   return all;
 }
 
+// ── Google Sheets Settings ──────────────────────────────────
+function loadSettings() {
+  return {
+    url: localStorage.getItem('oia_sheets_url')||'',
+    user: localStorage.getItem('oia_sheets_user')||''
+  };
+}
+function openSettings() {
+  const s = loadSettings();
+  document.getElementById('cfg-url').value = s.url;
+  document.getElementById('cfg-user').value = s.user;
+  document.getElementById('settings-modal').classList.add('open');
+}
+function closeSettings() {
+  document.getElementById('settings-modal').classList.remove('open');
+}
+function saveSettings() {
+  const url = document.getElementById('cfg-url').value.trim();
+  const user = document.getElementById('cfg-user').value.trim();
+  localStorage.setItem('oia_sheets_url', url);
+  localStorage.setItem('oia_sheets_user', user);
+  closeSettings();
+  updateSyncBadge(url ? 'ok' : 'off', url ? '✅ เชื่อมต่อแล้ว' : '⚙️ ยังไม่ได้เชื่อมต่อ');
+  showToast(url ? 'บันทึกการตั้งค่า Google Sheets แล้ว!' : 'ยกเลิกการเชื่อมต่อ Google Sheets');
+}
+
+// ── Sync Status Badge ───────────────────────────────────────
+function updateSyncBadge(state, text) {
+  const badge = document.getElementById('sync-badge');
+  const btnSync = document.getElementById('btn-sync');
+  badge.className = 'sync-badge ' + state;
+  badge.textContent = text;
+  if(btnSync) btnSync.style.display = (state === 'ok') ? 'flex' : 'none';
+}
+
+// ── Push ONE entry to Google Sheets ────────────────────────
+function syncToSheets(kpiId, entry) {
+  const { url, user } = loadSettings();
+  if(!url) return;
+  const payload = { action:'save', kpiId, user, ...entry };
+  updateSyncBadge('syncing', '🔄 กำลัง Sync...');
+  fetch(url, {
+    method:'POST',
+    mode:'no-cors',
+    headers:{'Content-Type':'text/plain'},
+    body: JSON.stringify(payload)
+  }).then(() => {
+    updateSyncBadge('ok', '✅ Sync สำเร็จ');
+  }).catch(() => {
+    updateSyncBadge('err', '❌ Sync ล้มเหลว');
+  });
+}
+
+// ── Pull ALL data from Google Sheets → overwrite local ─────
+function syncAllFromSheets() {
+  const { url } = loadSettings();
+  if(!url){ openSettings(); return; }
+  const badge = document.getElementById('sync-badge');
+  badge.innerHTML = '<span class="spin">🔄</span> กำลังดึงข้อมูล...';
+  badge.className = 'sync-badge syncing';
+  fetch(url + '?action=load', { method:'GET' })
+    .then(r => r.json())
+    .then(data => {
+      if(!Array.isArray(data)) throw new Error('invalid');
+      // Group by kpiId and merge (union by _id)
+      const grouped = {};
+      data.forEach(row => {
+        const id = row.kpiId;
+        if(!id) return;
+        if(!grouped[id]) grouped[id] = [];
+        grouped[id].push(row);
+      });
+      KPI_IDS.forEach(id => {
+        if(grouped[id] && grouped[id].length > 0) {
+          const local = loadData(id);
+          const localIds = new Set(local.map(e => String(e._id)));
+          const newEntries = grouped[id].filter(e => !localIds.has(String(e._id)));
+          if(newEntries.length > 0) saveData(id, [...local, ...newEntries]);
+        }
+      });
+      const total = data.length;
+      updateSyncBadge('ok', '✅ Sync สำเร็จ');
+      showToast('ดึงข้อมูลจาก Google Sheets สำเร็จ! (' + total + ' รายการรวม)');
+      refreshAll();
+    })
+    .catch(() => {
+      updateSyncBadge('err', '❌ ดึงข้อมูลไม่สำเร็จ');
+      showToast('เชื่อมต่อ Google Sheets ไม่สำเร็จ กรุณาตรวจสอบ URL', 'orange');
+    });
+}
+
+// ── Test Connection ─────────────────────────────────────────
+function testConnection() {
+  const url = document.getElementById('cfg-url').value.trim();
+  if(!url){ alert('กรุณากรอก Web App URL ก่อน'); return; }
+  const btn = document.querySelector('.modal-btn-test');
+  btn.textContent = '🔄 กำลังทดสอบ...';
+  btn.disabled = true;
+  fetch(url + '?action=ping', { method:'GET' })
+    .then(r => r.json())
+    .then(d => {
+      btn.textContent = '✅ เชื่อมต่อสำเร็จ!';
+      btn.style.background = 'var(--green)';
+      btn.style.color = '#fff';
+    })
+    .catch(() => {
+      btn.textContent = '❌ เชื่อมต่อไม่ได้';
+      btn.style.background = 'var(--red-light)';
+      btn.style.color = 'var(--red)';
+    })
+    .finally(() => {
+      setTimeout(() => {
+        btn.textContent = '🔌 ทดสอบการเชื่อมต่อ';
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.disabled = false;
+      }, 2500);
+    });
+}
+
 // ── Page Navigation ────────────────────────────────────────
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -836,6 +1024,8 @@ function submitForm(event, kpiId) {
   saveData(kpiId, arr);
   form.reset();
   showToast('บันทึกข้อมูลสำเร็จ! (รายการที่ '+ arr.length +')');
+  // ── Google Sheets Sync ──
+  syncToSheets(kpiId, data);
   refreshAll();
 }
 
@@ -903,7 +1093,7 @@ function refreshEntriesTable(id, arr) {
   const cfg = KPI[id];
   tbody.innerHTML = [...arr].reverse().map(e => `
     <tr>
-      <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${cfg.summary(e)}|'-'}</td>
+      <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${cfg.summary(e)||'-'}</td>
       <td><span class="badge badge-blue">${cfg.extra(e)||'-'}</span></td>
       <td style="font-size:11px;color:var(--grey)">${cfg.sub(e)||'-'}</td>
       <td><button class="btn-delete" onclick="deleteEntry('${id}',${e._id})" title="ลบ">🗑️</button></td>
@@ -1038,6 +1228,15 @@ function exportAllCSV() {
 
 // ── Init ───────────────────────────────────────────────────
 refreshAll();
+// Init sync badge
+(function() {
+  const { url } = loadSettings();
+  if(url) updateSyncBadge('ok', '✅ เชื่อมต่อ Sheets');
+  // Close modal on overlay click
+  document.getElementById('settings-modal').addEventListener('click', function(e) {
+    if(e.target === this) closeSettings();
+  });
+})();
 </script>
 </body>
 </html>
